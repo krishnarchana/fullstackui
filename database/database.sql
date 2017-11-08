@@ -1,0 +1,1 @@
+CREATE TABLE exogen_user (user_id BIGINT PRIMARY KEY, login VARCHAR(100), name_1 VARCHAR(255), name_2 VARCHAR(255), address VARCHAR(255), phone_1 VARCHAR(255), email VARCHAR(255), password VARCHAR(255),dob DATETIME, CONSTRAINT uniquelogin UNIQUE(login));
