@@ -1,9 +1,4 @@
-/**
- * LoginHandler
- * 
- * @author gopikrishna
- * @date 07-Nov-2017
- */
+
 package com.gopikrishna.db;
 
 import java.sql.Connection;
@@ -13,6 +8,12 @@ import java.util.ArrayList;
 
 // import pojo.UserVO;
 
+/**
+ * LoginHandler
+ * 
+ * @author gopikrishna
+ * @date 07-Nov-2017
+ */
 public class LoginHandler {
 	/*public ArrayList<UserVO> getAllUsers(Connection connection) throws Exception {
 		ArrayList<UserVO> userList = new ArrayList<UserVO>();

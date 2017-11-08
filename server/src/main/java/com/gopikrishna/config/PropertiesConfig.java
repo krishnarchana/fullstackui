@@ -1,7 +1,3 @@
-/**
- * Application properties manager
- * 
- */
 package com.gopikrishna.config;
 
 import java.io.IOException;
