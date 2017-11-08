@@ -26,6 +26,16 @@
 		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
 	
+	<!-- filter for authorization -->
+	<filter>
+    	<filter-name>AuthenticationFilter</filter-name>
+    	<filter-class>com.gopikrishna.app.RestAuthenticationFilter</filter-class>
+  	</filter>
+  	<filter-mapping>
+    	<filter-name>AuthenticationFilter</filter-name>
+    	<url-pattern>/rest/*</url-pattern>
+  	</filter-mapping>
+	
 	
 
 </web-app>
