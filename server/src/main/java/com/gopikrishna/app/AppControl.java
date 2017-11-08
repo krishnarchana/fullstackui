@@ -1,6 +1,3 @@
-/**
- * Application Startup
- */
 package com.gopikrishna.app;
 
 import javax.servlet.ServletException;

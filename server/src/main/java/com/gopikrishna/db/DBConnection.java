@@ -1,6 +1,3 @@
-/**
- * Database Connection manager
- */
 package com.gopikrishna.db;
 
 import java.sql.Connection;
