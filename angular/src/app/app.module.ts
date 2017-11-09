@@ -14,6 +14,12 @@ import { AboutRoutingModule } from './about-routing';
 import { AlertComponent } from './alert.component';
 import { RegisterComponent } from './register.component';
 import { RegisterRoutingModule } from './register-routing';
+import { UserPageComponent } from './userpage.component';
+import {  UserPageRoutingModule } from './userpage-routing';
+import { AdminPageComponent } from './adminpage.component';
+import {  AdminPageRoutingModule } from './adminpage-routing';
+
+import { EqualValidator } from './equal-validator.directive';
 
 import { AlertService } from './alert.service';
 import { LoginAuthenticationService } from './loginAuth.service';
@@ -31,7 +37,10 @@ import { BaseRequestOptions } from '@angular/http';
     ContactComponent,
     AboutComponent,
     AlertComponent,
-    RegisterComponent
+    RegisterComponent,
+    EqualValidator,
+    UserPageComponent,
+    AdminPageComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +50,9 @@ import { BaseRequestOptions } from '@angular/http';
     LoginRoutingModule,
     ContactRoutingModule,
     AboutRoutingModule,
-    RegisterRoutingModule
+    RegisterRoutingModule,
+    UserPageRoutingModule,
+    AdminPageRoutingModule
   ],
   providers: [
   AlertService,
