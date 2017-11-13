@@ -16,34 +16,34 @@ export class LoginComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: LoginAuthenticationService,
-        private alertService: AlertService) {
+        public alertService: AlertService) {
           }
 
     ngOnInit() {
         // reset login status
       //  this.authenticationService.logout();
-      console.log("here2");
-      this.authenticationService.getData()
-          .subscribe(
-              data => {
-                  console.log("good",data);
+      //console.log("here2");
+      //this.authenticationService.getData()
+        //  .subscribe(
+        //      data => {
+          //        console.log("good",data);
 
-              },
-              error => {
-                  this.alertService.error(error);
-                  this.loading = false;
-              });
+        //      },
+          //    error => {
+          //        this.alertService.error(error);
+        //          this.loading = false;
+        //      });
 
         // get return url from route parameters or default to '/'
         //this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
     login() {
-      this.authenticationService.login(this.model.email, this.model.password)
+      this.authenticationService.login(this.model.userid, this.model.password)
         .subscribe(
             data => {
                 console.log("good",data);
-                 this.router.navigate(['/userPage']);                 
+                 this.router.navigate(['/userPage']);
             },
             error => {
                 this.alertService.error(error);
