@@ -1,4 +1,4 @@
-package com.gopikrishna.rest;
+package com.gopikrishna.rest.service.user;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -9,14 +9,12 @@ import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 
-import com.gopikrishna.db.DBConnection;
-import com.gopikrishna.rest.user.UserLogin;
-import com.gopikrishna.rest.user.UserToken;
+import com.gopikrishna.db.DbConnection;
 
 @Path("/user")
 public class UserService {
 
-	static final Logger logger = Logger.getLogger(DBConnection.class);
+	static final Logger logger = Logger.getLogger(DbConnection.class);
 
 	@POST
 	@Path("/login")

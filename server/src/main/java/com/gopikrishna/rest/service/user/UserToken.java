@@ -1,4 +1,4 @@
-package com.gopikrishna.rest.user;
+package com.gopikrishna.rest.service.user;
 
 public class UserToken {
 	String token;

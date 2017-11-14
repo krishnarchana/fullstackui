@@ -1,12 +1,12 @@
 
-package com.gopikrishna.db;
+package com.gopikrishna.rest.service.auth;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-// import pojo.UserVO;
+import com.gopikrishna.rest.service.user.UserVO;
 
 /**
  * LoginHandler
@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @date 07-Nov-2017
  */
 public class LoginHandler {
-	/*public ArrayList<UserVO> getAllUsers(Connection connection) throws Exception {
+	public ArrayList<UserVO> getAllUsers(Connection connection) throws Exception {
 		ArrayList<UserVO> userList = new ArrayList<UserVO>();
 		try {
 			// String uname = request.getParameter("uname");
@@ -32,6 +32,6 @@ public class LoginHandler {
 		} catch (Exception e) {
 			throw e;
 		}
-	}*/
+	}
 
 }

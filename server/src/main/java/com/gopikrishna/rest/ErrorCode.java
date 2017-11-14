@@ -3,7 +3,6 @@ package com.gopikrishna.rest;
 public class ErrorCode {
 
 	int errorCode;
-
 	String errorStr;
 
 	public ErrorCode(int errorCode, String message) {

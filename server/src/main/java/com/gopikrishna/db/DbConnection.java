@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
+
 import com.gopikrishna.config.PropertiesConfig;
 
 /**
@@ -12,11 +13,11 @@ import com.gopikrishna.config.PropertiesConfig;
  * @author gopikrishna
  *
  */
-public class DBConnection {
+public class DbConnection {
 
-	static final Logger logger = Logger.getLogger(DBConnection.class);
+	static final Logger logger = Logger.getLogger(DbConnection.class);
 	private PropertiesConfig properties = PropertiesConfig.getInstance();
-	private static DBConnection singleton = new DBConnection();
+	private static DbConnection singleton = new DbConnection();
 
 	String db_url; // complete jdbc db url
 	String db_user; // db username
@@ -28,7 +29,7 @@ public class DBConnection {
 	// Database connection object (reusable)
 	private Connection connection = null;
 
-	private DBConnection() {
+	private DbConnection() {
 		// Example "jdbc:mysql://localhost:3306/test";
 		db_url = properties.getProperty("database.url");
 		db_user = properties.getProperty("database.user");
@@ -57,7 +58,7 @@ public class DBConnection {
 	 * 
 	 * @return
 	 */
-	public static DBConnection getInstance() {
+	public static DbConnection getInstance() {
 		return singleton;
 	}
 

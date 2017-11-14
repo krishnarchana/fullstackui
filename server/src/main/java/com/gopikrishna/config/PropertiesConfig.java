@@ -6,7 +6,7 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import com.gopikrishna.db.DBConnection;
+import com.gopikrishna.db.DbConnection;
 
 /**
  * Loads the properties from properties file
@@ -18,7 +18,7 @@ import com.gopikrishna.db.DBConnection;
  */
 public class PropertiesConfig {
 
-	static final Logger logger = Logger.getLogger(DBConnection.class);
+	static final Logger logger = Logger.getLogger(PropertiesConfig.class);
 	private static PropertiesConfig singleton = new PropertiesConfig();
 
 	String db_url;

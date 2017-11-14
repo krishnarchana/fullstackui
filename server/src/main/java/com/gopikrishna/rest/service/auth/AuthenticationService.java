@@ -1,4 +1,4 @@
-package com.gopikrishna.rest.auth;
+package com.gopikrishna.rest.service.auth;
 
 import java.io.IOException;
 import java.util.Base64;
