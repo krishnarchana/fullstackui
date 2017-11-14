@@ -8,8 +8,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
-import com.gopikrishna.rest.service.user.UserVO;
-import com.gopikrishna.rest.service.user.SecurityManager;
+import com.gopikrishna.rest.service.user.User;
 
 @Path("/auth")
 public class LoginService {
@@ -23,11 +22,11 @@ public class LoginService {
 
 	public String getAllUsersList(String username, String password) {
 		try {
-			ArrayList<UserVO> userList = null;
+			ArrayList<User> userList = null;
 			SecurityManager securityManager = new SecurityManager();
 			userList = securityManager.getAllUsersList();
-			for (UserVO userVO : userList) {
-				if (userVO.getUsername().equals(username)) {
+			for (User userVO : userList) {
+				if (userVO.getLogin().equals(username)) {
 					if (userVO.getPassword().equals(password)) {
 						return "Logged in User:" + username;
 					}

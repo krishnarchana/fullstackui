@@ -1,15 +1,15 @@
-package com.gopikrishna.rest.service.user;
+package com.gopikrishna.rest.service.auth;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.gopikrishna.db.DbConnection;
-import com.gopikrishna.rest.service.auth.LoginHandler;
+import com.gopikrishna.rest.service.user.User;
 
 public class SecurityManager {
 
-	public ArrayList<UserVO> getAllUsersList() throws Exception {
-		ArrayList<UserVO> userList = null;
+	public ArrayList<User> getAllUsersList() throws Exception {
+		ArrayList<User> userList = null;
 		try {
 			DbConnection database = DbConnection.getInstance();
 

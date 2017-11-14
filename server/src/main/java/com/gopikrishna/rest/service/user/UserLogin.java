@@ -1,12 +1,17 @@
 package com.gopikrishna.rest.service.user;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UserLogin {
+	@JsonProperty
 	String username;
+	@JsonProperty
 	String password;
 
 	public UserLogin() {
-		
+
 	}
+
 	public String getPassword() {
 		return password;
 	}

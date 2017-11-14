@@ -31,9 +31,6 @@ public class PolicyService {
 
 	PolicyManager pManager = new PolicyManager();
 
-	/**
-	 * 
-	 */
 	public PolicyService() {
 	}
 
@@ -44,38 +41,45 @@ public class PolicyService {
 
 		logger.debug("Start");
 
-		if (pManager.isValid()) {
-			try {
-				String param = info.getQueryParameters().getFirst("userId");
-				logger.debug("Parameter : " + param);
-				if (param != null) {
-					int userId = Integer.parseInt(param);
-					logger.debug("getting policies for user : " + userId);
-					List<Policy> policies = pManager.getPolicyForUser(userId);
-					if (policies.size() > 0)
-						return Response.ok().entity(policies).build();
-					else
-						return Response.status(204).entity("{}").build();
-				}
+		try {
+			String param = info.getQueryParameters().getFirst("userId");
 
-				param = info.getQueryParameters().getFirst("policyNo");
-				if (param != null) {
-					int policyNo = Integer.parseInt(param);
-					logger.debug("getting policy for policy no : " + policyNo);
-					Policy policy = pManager.getPolicy(policyNo);
-					if (policy != null) {
-						return Response.ok().entity(policy).build();
-					} else {
-						return Response.status(204).entity("{}").build();
-					}
-				}
+			logger.debug("Parameter : " + param);
 
-			} catch (Exception e) {
-				logger.error("Error : " + e.getMessage());
+			if (param != null) {
+				int userId = Integer.parseInt(param);
+
+				logger.debug("getting policies for user : " + userId);
+
+				List<Policy> policies = pManager.getPolicyForUser(userId);
+				if (policies == null || policies.size() < 0) {
+					return Response.status(204).entity("{}").build();
+				} else {
+					return Response.ok().entity(policies).build();
+				}
 			}
+
+			// Check for "policyNo"
+			param = info.getQueryParameters().getFirst("policyNo");
+			if (param != null) {
+				int policyNo = Integer.parseInt(param);
+
+				logger.debug("getting policy for policy no : " + policyNo);
+
+				Policy policy = pManager.getPolicy(policyNo);
+
+				if (policy != null) {
+					return Response.ok().entity(policy).build();
+				} else {
+					return Response.status(204).entity("{}").build();
+				}
+			}
+
+		} catch (Exception e) {
+			logger.error("Error : " + e.getMessage());
 		}
 
-		ErrorCode error = new ErrorCode(-1, "database failure");
+		ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_READ_FAILED, "No data found/Some error occurred.");
 		return Response.serverError().entity(error).build();
 
 	}
@@ -106,20 +110,21 @@ public class PolicyService {
 
 		logger.debug("Add policy : " + policy);
 
-		if (pManager.isValid()) {
-			try {
-				int policyNo = pManager.addPolicy(policy, false);
-				logger.debug("Reponse policyNo : " + policyNo);
+		try {
+			int policyNo = pManager.addPolicy(policy, false);
+			logger.debug("Reponse policyNo : " + policyNo);
 
+			if (policyNo > 0) {
 				return Response.ok().entity(policyNo).build();
-			} catch (Exception e) {
-				logger.error("Error : " + e.getMessage());
+			} else {
+				logger.warn("Failed to add policy record");
 			}
+		} catch (Exception e) {
+			logger.error("Error : " + e.getMessage());
 		}
 
-		ErrorCode error = new ErrorCode(-1, "Adding failed.");
+		ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_ADD_FAILED, "Adding failed.");
 		return Response.serverError().entity(error).build();
-
 	}
 
 	@POST
@@ -134,15 +139,17 @@ public class PolicyService {
 				int policyNo = pManager.addPolicy(policy, true);
 				logger.debug("Reponse policyNo : " + policyNo);
 
-				return Response.ok().entity(policyNo).build();
+				if (policyNo > 0) {
+					return Response.ok().entity(policyNo).build();
+				} else {
+					logger.warn("Failed to add policy record");
+				}
 			} catch (Exception e) {
 				logger.error("Error : " + e.getMessage());
 			}
 		}
 
-		ErrorCode error = new ErrorCode(-1, "Update failed.");
+		ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_ADD_FAILED, "Update failed.");
 		return Response.serverError().entity(error).build();
-
 	}
-
 }

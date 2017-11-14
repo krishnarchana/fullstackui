@@ -58,6 +58,11 @@ public class PolicyManager {
 	 * @return
 	 */
 	public List<Policy> getAllPolicies() throws Exception {
+		if (!isValid()) {
+			logger.warn("DB connection is not available");
+			return null;
+		}
+
 		List<Policy> policies = new ArrayList<>();
 
 		try {
@@ -91,6 +96,10 @@ public class PolicyManager {
 	 * @return
 	 */
 	public Policy getPolicy(int policyNo) throws Exception {
+		if (!isValid()) {
+			logger.warn("DB connection is not available");
+			return null;
+		}
 
 		if (policyNo < 1) {
 			logger.warn("Invalid policyNo : " + policyNo);
@@ -128,6 +137,11 @@ public class PolicyManager {
 	 * @return
 	 */
 	public List<Policy> getPolicyForUser(int userId) throws Exception {
+		
+		if (!isValid()) {
+			logger.warn("DB connection is not available");
+			return null;
+		}
 
 		if (userId < 1) {
 			logger.warn("Invalid userId : " + userId);
@@ -177,6 +191,12 @@ public class PolicyManager {
 	 * @return policy_no
 	 */
 	public int addPolicy(Policy policy, boolean isUpdate) throws SQLException, Exception {
+		
+		if (!isValid()) {
+			logger.warn("DB connection is not available");
+			return -1;
+		}
+		
 		int policyNo = -1;
 
 		if (policy == null) {
