@@ -15,7 +15,7 @@ INSERT INTO user (login, name_1, address, phone_1, email, password, dob, type)
 			VALUES ('admin', 'Administrator', ,'Bangalore','+911234345','gopikrishna.e84@gmail.com','MTBfYmFuZ2Fsb3JlXzEw', '1984-02-03',1);
 
 
-CREATE TABLE policy(policy_no INT NOT NULL, 
+CREATE TABLE policy(policy_no INT AUTO_INCREMENT, 
 					user_id INT,
 					name VARCHAR(50), 
 					amount_paid FLOAT(7,2), 
