@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.gopikrishna.rest.service.auth;
+package org.policymanager.rest.service.auth;
 
 /**
  * @author gopikrishna

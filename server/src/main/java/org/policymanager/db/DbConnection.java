@@ -1,12 +1,11 @@
-package com.gopikrishna.db;
+package org.policymanager.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
-
-import com.gopikrishna.config.PropertiesConfig;
+import org.policymanager.config.PropertiesConfig;
 
 /**
  * 

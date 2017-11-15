@@ -1,12 +1,12 @@
 
-package com.gopikrishna.rest.service.auth;
+package org.policymanager.rest.service.auth;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import com.gopikrishna.rest.service.user.User;
+import org.policymanager.rest.service.user.User;
 
 /**
  * LoginHandler

@@ -1,5 +1,6 @@
-package com.gopikrishna.rest.service.user;
+package org.policymanager.rest.service.user;
 
+import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -10,8 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
-
-import com.gopikrishna.rest.ErrorCode;
+import org.policymanager.rest.ErrorCode;
 
 @Path("/user")
 public class UserService {
@@ -20,28 +20,7 @@ public class UserService {
 
 	UserManager userManager = new UserManager();
 
-	/*
-	 * @GET
-	 * 
-	 * @Path("/get")
-	 * 
-	 * @Consumes({ MediaType.APPLICATION_JSON })
-	 * 
-	 * @Produces({ MediaType.APPLICATION_JSON }) public Response
-	 * userLogin(UserLogin userLogin) {
-	 * 
-	 * if (userLogin != null) { if (logger.isDebugEnabled()) {
-	 * logger.debug("username : " + userLogin.getUsername());
-	 * logger.debug("password : " + userLogin.getPassword()); } } else {
-	 * //ErrorCode errorCode = new ErrorCode(-1,"Please provide login data.");
-	 * logger.warn(">> No login data found"); return
-	 * Response.noContent().build(); }
-	 * 
-	 * UserToken userToken = new UserToken(); userToken.setUsername("venkat");
-	 * userToken.setToken("HF*&DDDDD"); return
-	 * Response.ok().entity(userToken).build(); }
-	 */
-
+	@PermitAll
 	@GET
 	@Path("/get")
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -71,6 +50,7 @@ public class UserService {
 		}
 	}
 
+	@PermitAll
 	@POST
 	@Path("/add")
 	@Consumes({ MediaType.APPLICATION_JSON })

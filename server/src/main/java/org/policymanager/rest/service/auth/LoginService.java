@@ -1,4 +1,4 @@
-package com.gopikrishna.rest.service.auth;
+package org.policymanager.rest.service.auth;
 
 import java.util.ArrayList;
 
@@ -8,7 +8,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
-import com.gopikrishna.rest.service.user.User;
+import org.policymanager.rest.service.user.User;
 
 @Path("/auth")
 public class LoginService {

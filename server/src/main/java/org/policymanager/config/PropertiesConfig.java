@@ -1,12 +1,11 @@
-package com.gopikrishna.config;
+package org.policymanager.config;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
-
-import com.gopikrishna.db.DbConnection;
+import org.policymanager.db.DbConnection;
 
 /**
  * Loads the properties from properties file

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.gopikrishna.rest.service.policy;
+package org.policymanager.rest.service.policy;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,8 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-
-import com.gopikrishna.db.DbConnection;
+import org.policymanager.db.DbConnection;
 
 /**
  * Policy manager

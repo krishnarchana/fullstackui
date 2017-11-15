@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.gopikrishna.rest.service.policy;
+package org.policymanager.rest.service.policy;
 
 import java.sql.Date;
 

@@ -1,10 +1,10 @@
-package com.gopikrishna.rest.service.auth;
+package org.policymanager.rest.service.auth;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import com.gopikrishna.db.DbConnection;
-import com.gopikrishna.rest.service.user.User;
+import org.policymanager.db.DbConnection;
+import org.policymanager.rest.service.user.User;
 
 public class SecurityManager {
 

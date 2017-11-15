@@ -1,10 +1,12 @@
 /**
  * 
  */
-package com.gopikrishna.rest.service.policy;
+package org.policymanager.rest.service.policy;
 
 import java.util.List;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -16,8 +18,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.apache.log4j.Logger;
-
-import com.gopikrishna.rest.ErrorCode;
+import org.policymanager.rest.ErrorCode;
 
 /**
  * @author gopikrishna
@@ -34,6 +35,7 @@ public class PolicyService {
 	public PolicyService() {
 	}
 
+	@PermitAll
 	@GET
 	@Path("/query")
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -52,7 +54,7 @@ public class PolicyService {
 				logger.debug("getting policies for user : " + userId);
 
 				List<Policy> policies = pManager.getPolicyForUser(userId);
-				if (policies == null || policies.size() < 0) {
+				if (policies == null || policies.size() < 1) {
 					return Response.status(204).entity("{}").build();
 				} else {
 					return Response.ok().entity(policies).build();
@@ -84,24 +86,7 @@ public class PolicyService {
 
 	}
 
-	/*
-	 * @GET
-	 * 
-	 * @Path("/query")
-	 * 
-	 * @Produces({ MediaType.APPLICATION_JSON }) public Response
-	 * getPolicy(@QueryParam("policyNo") int policyNo) { if (pManager.isValid())
-	 * { try { Policy policy = pManager.getPolicy(policyNo); return
-	 * Response.ok().entity(policy).build();
-	 * 
-	 * // GenericEntity<List<Person>> entity = new //
-	 * GenericEntity<List<Person>>(Lists.newArrayList<persons)) {}; // Return
-	 * Response.ok(entity).build(); } catch (Exception e) {
-	 * logger.error("Error : " + e.getMessage()); } }
-	 * 
-	 * return Response.serverError().entity("Database failure").build(); }
-	 */
-
+	@RolesAllowed("ADMIN")
 	@POST
 	@Path("/add")
 	@Consumes({ MediaType.APPLICATION_JSON })

@@ -1,4 +1,4 @@
-package com.gopikrishna.app;
+package org.policymanager.app;
 
 import java.io.Serializable;
 
@@ -6,9 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
 import org.apache.log4j.Logger;
-
-import com.gopikrishna.config.PropertiesConfig;
-import com.gopikrishna.db.DbConnection;
+import org.policymanager.config.PropertiesConfig;
+import org.policymanager.db.DbConnection;
 
 /**
  * Application startup control
@@ -30,6 +29,7 @@ public class AppControl extends HttpServlet implements Serializable {
 	}
 
 	private void loadProperties() {
+		// Just load the properties
 		PropertiesConfig properties = PropertiesConfig.getInstance();
 	}
 

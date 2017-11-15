@@ -1,4 +1,4 @@
-package com.gopikrishna.rest.service.user;
+package org.policymanager.rest.service.user;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,8 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.apache.log4j.Logger;
-
-import com.gopikrishna.db.DbConnection;
+import org.policymanager.db.DbConnection;
 
 /**
  * User managing functions

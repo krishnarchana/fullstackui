@@ -1,4 +1,4 @@
-package com.gopikrishna.rest;
+package org.policymanager.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

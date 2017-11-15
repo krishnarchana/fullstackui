@@ -1,4 +1,4 @@
-package com.gopikrishna.rest.service.user;
+package org.policymanager.rest.service.user;
 
 public class UserToken {
 	String token;
