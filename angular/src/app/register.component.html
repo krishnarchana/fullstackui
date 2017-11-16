@@ -23,35 +23,35 @@
 					<div class="form-group">
 						<label for="firstName" class="col-md-4 control-label labelMandatory">First Name</label>
 						<div class="col-md-8" [ngClass]="{ 'has-error': f.submitted && !firstName.valid }">
-							<input type="text" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" class="form-control" autofocus required>
+							<input type="text" name="firstName" [(ngModel)]="model.name_1" #firstName="ngModel" class="form-control" autofocus required>
 							<div *ngIf="f.submitted && !firstName.valid" class="help-block">FirstName is required</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="lastName" class="col-md-4 control-label labelMandatory">Last Name</label>
 						<div class="col-md-8" [ngClass]="{ 'has-error': f.submitted && !lastName.valid }">
-							<input type="text" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel"  class="form-control" required>
+							<input type="text" name="lastName" [(ngModel)]="model.name_2" #lastName="ngModel"  class="form-control" required>
 							<div *ngIf="f.submitted && !lastName.valid" class="help-block">LastName is required</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="birthDate" class="col-md-4 control-label labelMandatory">Date of Birth</label>
 						<div class="col-md-8" [ngClass]="{ 'has-error': f.submitted && !birthDate.valid }">
-							<input type="date" name="birthDate" [(ngModel)]="model.birthDate" #birthDate="ngModel" class="form-control" required>
+							<input type="date" name="birthDate" [(ngModel)]="model.dob" id="dateField" #birthDate="ngModel" class="form-control" required>
 							<div *ngIf="f.submitted && !birthDate.valid" class="help-block">Date Of Birth is required</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="userAddress" class="col-md-4 control-label labelMandatory">Address</label>
 						<div class="col-md-8" [ngClass]="{ 'has-error': f.submitted && !userAddress.valid }">
-							<input type="text" name="userAddress" [(ngModel)]="model.userAddress" #userAddress="ngModel" class="form-control" required>
+							<input type="text" name="userAddress" [(ngModel)]="model.address" #userAddress="ngModel" class="form-control" required>
 							<div *ngIf="f.submitted && !userAddress.valid" class="help-block">User Address is required</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="contact" class="col-md-4 control-label labelMandatory">Contact No</label>
 						<div class="col-md-8" [ngClass]="{ 'has-error': f.submitted && !contact.valid }">
-							<input type="number" name="contact" [(ngModel)]="model.contact" #contact="ngModel" class="form-control" required>
+							<input type="number" name="contact" [(ngModel)]="model.phone" #contact="ngModel" class="form-control" required>
 							<div *ngIf="f.submitted && !contact.valid" class="help-block">Contact No is required</div>
 						</div>
 					</div>

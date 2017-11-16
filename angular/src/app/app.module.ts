@@ -15,9 +15,9 @@ import { AlertComponent } from './alert.component';
 import { RegisterComponent } from './register.component';
 import { RegisterRoutingModule } from './register-routing';
 import { UserPageComponent } from './userpage.component';
-import {  UserPageRoutingModule } from './userpage-routing';
+import { UserPageRoutingModule } from './userpage-routing';
 import { AdminPageComponent } from './adminpage.component';
-import {  AdminPageRoutingModule } from './adminpage-routing';
+import { AdminPageRoutingModule } from './adminpage-routing';
 
 import { EqualValidatorDirective } from './equal-validator.directive';
 
@@ -26,6 +26,10 @@ import { LoginAuthenticationService } from './loginAuth.service';
 import { RegistrationService } from './register.service';
 import { UserService } from './user.service';
 import { RegisterUser } from './registerUser';
+import { UserpageService } from './userpage-service';
+import { User } from './User';
+import { RegUser } from './RegUser';
+import { Policy } from './Policy';
 
 // used to create fake backend
 import { fakeBackendProvider } from './fake.background';
@@ -63,7 +67,11 @@ import { BaseRequestOptions } from '@angular/http';
   UserService,
   MockBackend,
   BaseRequestOptions,
-  RegisterUser
+  RegisterUser,
+  User,
+  RegUser,
+  UserpageService,
+  Policy
 ],
   bootstrap: [AppComponent]
 })
