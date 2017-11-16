@@ -5,6 +5,7 @@ import java.util.Base64;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -49,7 +50,7 @@ public class AuthService {
 
 	@PermitAll
 	@Path("/logout")
-	@POST
+	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response useLogout(@HeaderParam("authorization") String authString) {
 		try {
@@ -58,7 +59,8 @@ public class AuthService {
 			// Example"Basic YWRtaW46YWRtaW4="
 			final String encodedUserPassword = authString.replaceFirst("Basic" + " ", "");
 			String token = null;
-			byte[] decodedBytes = Base64.getDecoder().decode(encodedUserPassword);
+			// byte[] decodedBytes = Base64.getDecoder().decode(encodedUserPassword);
+			byte[] decodedBytes = encodedUserPassword.getBytes();
 			token = new String(decodedBytes, "UTF-8");
 
 			if (!isUserAuthenticated(token)) {
