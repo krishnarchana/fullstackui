@@ -91,3 +91,34 @@ Response Failed : (user_id doesn't exists)
 "errorStr": "User doesn't exists."
 }
 
+-------------
+login 
+POST : http://localhost:8080/PolicyManagerServer/rest/auth/login
+Content-Type: application/json
+body: {
+  "username": "Admin",
+  "password": "Admin"
+}
+
+response :
+{
+"userId": 1,
+"token": "[B@2f55498a",
+"name": "Administrator",
+"login_time": 1510813529514
+}
+
+response : error : 401 status code
+
+
+
+logout
+========
+POST http://localhost:8080/PolicyManagerServer/rest/auth/logout
+Authorization: Basic <bcase64-encode-token>
+ Ex : Authorization Basic W0JAM2U2MDNmYTA=
+response
+{
+"success": "User logged out"
+}
+

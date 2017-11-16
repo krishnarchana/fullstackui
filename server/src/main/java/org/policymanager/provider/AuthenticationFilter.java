@@ -44,7 +44,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
 	@Override
 	public void filter(ContainerRequestContext requestContext) {
 		Method method = resourceInfo.getResourceMethod();
-		
+
 		// Access allowed for all
 		if (!method.isAnnotationPresent(PermitAll.class)) {
 			// Access denied for all
@@ -94,7 +94,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
 	private boolean isUserAllowed(final String username, final String password, final Set<String> rolesSet) {
 		boolean isAllowed = false;
 
-		// logger.debug("u : " + username + ", pass : " + password + ", role : " + rolesSet);
+		logger.debug("u : " + username + ", pass : " + password + ", role : " + rolesSet);
 
 		// Step 1. Fetch password from database and match with password in
 		// argument
@@ -111,6 +111,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
 				isAllowed = true;
 			}
 		}
+
 		return isAllowed;
 	}
 }

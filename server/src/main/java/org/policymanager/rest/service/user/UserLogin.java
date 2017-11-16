@@ -9,7 +9,6 @@ public class UserLogin {
 	String password;
 
 	public UserLogin() {
-
 	}
 
 	public String getPassword() {

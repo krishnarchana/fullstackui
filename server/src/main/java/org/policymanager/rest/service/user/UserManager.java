@@ -54,7 +54,7 @@ public class UserManager {
 			logger.warn("DB connection is not available");
 			return null;
 		}
-		
+
 		if (userId < 1) {
 			logger.warn("Invalid userId : " + userId);
 			return null;
@@ -100,7 +100,53 @@ public class UserManager {
 		return userObj;
 
 	}
-	
+
+	/**
+	 * Get user for login
+	 * 
+	 * @param userId
+	 * @return User <OR> ERROR <OR> null
+	 */
+	public User getUserForLogin(String login) throws Exception {
+
+		if (!isValid()) {
+			logger.warn("DB connection is not available");
+			return null;
+		}
+
+		if (login == null || login.length() < 1) {
+			logger.warn("Invalid login");
+			return null;
+		}
+
+		User userObj = null;
+		try {
+			PreparedStatement ps = dbConnection.prepareStatement("SELECT * FROM user WHERE login = ?");
+			ps.setString(1, login);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				userObj = new User();
+				userObj.setUser_id(rs.getInt("user_id"));
+				userObj.setLogin(rs.getString("login"));
+				userObj.setName_1(rs.getString("name_1"));
+				userObj.setName_2(rs.getString("name_2"));
+				userObj.setAddress(rs.getString("address"));
+				userObj.setPhone(rs.getString("phone_1"));
+				userObj.setEmail(rs.getString("email"));
+				userObj.setPassword(rs.getString("password"));
+				userObj.setDob(rs.getDate("dob"));
+				userObj.setType(rs.getInt("type"));
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+
+		logger.debug("User+ : " + userObj);
+		return userObj;
+
+	}
+
 	/**
 	 * Check whether the login already exists
 	 * 
@@ -113,7 +159,7 @@ public class UserManager {
 			logger.warn("DB connection is not available");
 			throw new Exception("No DB Connection");
 		}
-		
+
 		if (login == null || login.length() < 1) {
 			logger.warn("Invalid login name : " + login);
 			throw new Exception("Invalid login name");
@@ -148,7 +194,7 @@ public class UserManager {
 			logger.warn("DB connection is not available");
 			return -1;
 		}
-		
+
 		int user_id = -1;
 
 		if (userObj == null) {
@@ -173,18 +219,23 @@ public class UserManager {
 
 			if (!isUpdate) { // Add
 				preparedStmt.setString(1, userObj.getLogin());
-			}
-
-			preparedStmt.setString(2, userObj.getName_1());
-			preparedStmt.setString(3, userObj.getName_2());
-			preparedStmt.setString(4, userObj.getAddress());
-			preparedStmt.setString(5, userObj.getPhone());
-			preparedStmt.setString(6, userObj.getEmail());
-			preparedStmt.setString(7, userObj.getPassword());
-			preparedStmt.setDate(8, userObj.getDob());
-			preparedStmt.setInt(9, userObj.getType());
-
-			if (isUpdate) {
+				preparedStmt.setString(2, userObj.getName_1());
+				preparedStmt.setString(3, userObj.getName_2());
+				preparedStmt.setString(4, userObj.getAddress());
+				preparedStmt.setString(5, userObj.getPhone());
+				preparedStmt.setString(6, userObj.getEmail());
+				preparedStmt.setString(7, userObj.getPassword());
+				preparedStmt.setDate(8, userObj.getDob());
+				preparedStmt.setInt(9, userObj.getType());
+			} else {
+				preparedStmt.setString(1, userObj.getName_1());
+				preparedStmt.setString(2, userObj.getName_2());
+				preparedStmt.setString(3, userObj.getAddress());
+				preparedStmt.setString(4, userObj.getPhone());
+				preparedStmt.setString(5, userObj.getEmail());
+				preparedStmt.setString(6, userObj.getPassword());
+				preparedStmt.setDate(7, userObj.getDob());
+				preparedStmt.setInt(8, userObj.getType());
 				preparedStmt.setInt(9, userObj.getUser_id());
 			}
 
