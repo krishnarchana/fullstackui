@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class LoginAuthenticationService {
+  headers: Headers;
+  options: RequestOptions;
 private getURL = "http://localhost:8080/RESTfulExample/rest/hello/gopi";
     constructor(private http: Http) {}
 
@@ -18,13 +20,16 @@ private getURL = "http://localhost:8080/RESTfulExample/rest/hello/gopi";
 
     }
 
-    login(userid: string, password: string) {
-      var headers = new Headers();
+    login(userid: string, password: string): Observable<any> {
+      this.headers = new Headers({ 'Content-Type': 'application/json' });
+       this.options = new RequestOptions({ headers: this.headers });
+    //  var headers = new Headers();
       //headers.append('Access-Control-Allow-Headers', 'Access-Control-Allow-Origin');
       //headers.append('Access-Control-Allow-Origin', "*"); x-www-form-urlencoded
       var creds = 'userid=' + userid + '&password='+password;
-      headers.append('Content-Type', 'application/json');
-        return this.http.post('http://localhost:8080/RESTfulExample/rest/hello/gopi', creds, {headers: headers})
+      let body = JSON.stringify(creds);
+      //headers.append('Content-Type', 'application/json');
+        return this.http.post('http://localhost:8080/JerseyDemos/rest/user/get', body, this.options)
             .map((response: Response) => response.json());
           //  response.json();
                 // login successful if there's a jwt token in the response

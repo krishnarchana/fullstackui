@@ -77,6 +77,7 @@ public class PolicyManager {
 				// java.util.Date(dbSqlDate.getTime());
 				policy.setMaturityDate(rs.getDate("end_date"));
 				policy.setPolicyValid(rs.getBoolean("policy_valid"));
+				policy.setPolicyDetails(rs.getString("policy_details"));
 
 				policies.add(policy);
 			}
@@ -119,6 +120,7 @@ public class PolicyManager {
 				policy.setAmountPaid(rs.getFloat("amount_paid"));
 				policy.setMaturityDate(rs.getDate("end_date"));
 				policy.setPolicyValid(rs.getBoolean("policy_valid"));
+				policy.setPolicyDetails(rs.getString("policy_details"));
 			}
 		} catch (Exception e) {
 			throw e;
@@ -163,6 +165,7 @@ public class PolicyManager {
 				// java.util.Date(dbSqlDate.getTime());
 				policy.setMaturityDate(rs.getDate("end_date"));
 				policy.setPolicyValid(rs.getBoolean("policy_valid"));
+				policy.setPolicyDetails(rs.getString("policy_details"));
 
 				policies.add(policy);
 			}
@@ -224,6 +227,7 @@ public class PolicyManager {
 			preparedStmt.setFloat(3, policy.getAmountPaid());
 			preparedStmt.setDate(4, policy.getMaturityDate());
 			preparedStmt.setBoolean(5, policy.isPolicyValid());
+			preparedStmt.setString(7, policy.getPolicyDetails());
 
 			if (isUpdate) {
 				preparedStmt.setInt(6, policy.getPolicyNo());

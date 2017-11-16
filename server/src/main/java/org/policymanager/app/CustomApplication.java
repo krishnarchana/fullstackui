@@ -15,6 +15,5 @@ public class CustomApplication extends ResourceConfig {
 		register(LoggingFilter.class);
 		register(GsonMessageBodyHandler.class);
 		register(AuthenticationFilter.class);
-		
 	}
 }

@@ -28,6 +28,9 @@ public class Policy {
 	@JsonProperty("valid")
 	private boolean policyValid;
 	
+	@JsonProperty("details")
+	private String policyDetails;
+
 	private int userId = 0;
 
 	/**
@@ -84,11 +87,19 @@ public class Policy {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
+	
+	public String getPolicyDetails() {
+		return policyDetails;
+	}
+
+	public void setPolicyDetails(String policyDetails) {
+		this.policyDetails = policyDetails;
+	}
 
 	@Override
 	public String toString() {
 		return "No : " + policyNo + ", Name : " + policyName + ", Amount : " + amountPaid + ", Maturity : "
-				+ maturityDate + ", Valid " + policyValid;
+				+ maturityDate + ", Valid : " + policyValid + ", policyDetails : " + policyDetails;
 	}
 
 }

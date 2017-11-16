@@ -42,6 +42,13 @@
     	<url-pattern>/rest/*</url-pattern>
   	</filter-mapping>-->
 	
+	<filter>
+    	<filter-name>CrossFilter</filter-name>
+    	<filter-class>org.policymanager.app.CrossFilter</filter-class>
+  	</filter>
+  	<filter-mapping>
+    	<filter-name>CrossFilter</filter-name>
+    	<url-pattern>/rest/*</url-pattern>
+  	</filter-mapping>
 	
-
 </web-app>

@@ -28,34 +28,29 @@
 				<th>S.No</th>
 				<th>Policy Name</th>
 				<th>Policy Details</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td class="col-md-2">1</td>
-				<td class="col-md-2">Health Insurance Policy 1</td>
-				<td class="col-md-2">Policy Details 1</td>
-			</tr>
-			<tr>
-				<td class="col-md-2">1</td>
-				<td class="col-md-2">Health Insurance Policy 1</td>
-				<td class="col-md-2">Policy Details 1</td>
-			</tr>
-			<tr>
-				<td class="col-md-2">1</td>
-				<td class="col-md-2">Health Insurance Policy 1</td>
-				<td class="col-md-2">Policy Details 1</td>
-			</tr>
-			<tr>
-				<td class="col-md-2">1</td>
-				<td class="col-md-2">Health Insurance Policy 1</td>
-				<td class="col-md-2">Policy Details 1</td>
-			</tr>
-			<tr>
-				<td class="col-md-2">1</td>
-				<td class="col-md-2">Health Insurance Policy 1</td>
-				<td class="col-md-2">Policy Details 1</td>
-			</tr>
+			<tr *ngFor="let x of message; let i=index">
+				 <td *ngIf="x.amount == editAmount">
+					 {{ i+1 }}
+				 </td>
+				 <td *ngIf="x.amount !== editAmount">{{ i+1 }}</td>
+				 <td *ngIf="x.amount == editAmount">
+					 <input name="PolicyName" type="text" [(ngModel)]="x.name"/>
+				 </td>
+				 <td *ngIf="x.amount !== editAmount">{{x.name}}</td>
+				 <td *ngIf="x.amount == editAmount">
+					 <input name="PolicyDetails" type="text" [(ngModel)]="x.details"/>
+				 </td>
+				 <td *ngIf="x.amount !== editAmount">{{x.details}}</td>
+				 <td>
+		      <a (click)="toggle(x.amount)" *ngIf="x.amount !== editAmount">Edit</a>
+					<a (click)="saveRow(x.name, x.details); editAmount='0'" *ngIf="x.amount == editAmount">Save</a>
+					<a (click)="editAmount='0'" *ngIf="x.amount == editAmount">Cancel</a>
+		    </td>
+	    </tr>
 		</tbody>
 	</table>
 	</div>
@@ -77,27 +72,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td class="col-md-2">1</td>
-        <td class="col-md-2">Health Insurance Policy 1</td>
-        <td class="col-md-2">10000</td>
-				<td class="col-md-2">1/12/2020</td>
-				<td class="col-md-2">Yes</td>
-      </tr>
-      <tr>
-				<td class="col-md-2">1</td>
-        <td class="col-md-2">Health Insurance Policy 1</td>
-        <td class="col-md-2">50000</td>
-				<td class="col-md-2">1/12/2020</td>
-				<td class="col-md-2">Yes</td>
-      </tr>
-      <tr>
-				<td class="col-md-2">1</td>
-        <td class="col-md-2">Health Insurance Policy 1</td>
-        <td class="col-md-2">50000</td>
-				<td class="col-md-2">1/12/2020</td>
-				<td class="col-md-2">No</td>
-      </tr>
+      <tr *ngFor="let x of message; let i=index">
+				<td>{{ i+1 }}</td>
+				<td>{{ x.name }}</td>
+				<td>{{ x.amount }}</td>
+				<td>{{ x.maturityDate }}</td>
+				<td>Yes</td>
+			</tr>
     </tbody>
   </table>
 </div>
