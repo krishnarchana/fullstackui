@@ -38,7 +38,7 @@ Authorization: Basic <token>
 2.3) (admin) GET http://localhost:8080/PolicyManagerServer/rest/policy/<policy_no>
 Authorization: Basic <token>
 
-2.4)  (admin):  GET http://localhost:8080/RESTfulExample/rest/policy/all
+2.4)  (admin):  GET http://localhost:8080/PolicyManagerServer/rest/policy/all
 Authorization: Basic <token>
 Returns all the policies in the policy table
 
@@ -132,7 +132,7 @@ response : error : 401 status code
 
 logout
 ========
-POST http://localhost:8080/PolicyManagerServer/rest/auth/logout
+GET http://localhost:8080/PolicyManagerServer/rest/auth/logout
 Authorization: Basic token
  Ex : Authorization Basic W0JAM2U2MDNmYTA=
 response
