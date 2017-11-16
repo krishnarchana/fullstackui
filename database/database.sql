@@ -27,6 +27,6 @@ CREATE TABLE policy(policy_no INT AUTO_INCREMENT,
 
 
 CREATE TABLE login(user_id INT, 
-				token VARCHAR(620
+				token VARCHAR(40),
 				login_time DATETIME, 
 				valid BIT);
