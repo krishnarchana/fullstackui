@@ -114,7 +114,7 @@ public class PolicyManager {
 			if (rs.next()) {
 				policy = new Policy();
 				policy.setPolicyNo(rs.getInt("policy_no"));
-				policy.setPolicyNo(rs.getInt("user_id"));
+				policy.setUserId(rs.getInt("user_id"));
 				policy.setPolicyName(rs.getString("name"));
 				policy.setAmountPaid(rs.getFloat("amount_paid"));
 				policy.setMaturityDate(rs.getDate("end_date"));
@@ -156,7 +156,7 @@ public class PolicyManager {
 			while (rs.next()) {
 				Policy policy = new Policy();
 				policy.setPolicyNo(rs.getInt("policy_no"));
-				policy.setPolicyNo(rs.getInt("user_id"));
+				policy.setUserId(rs.getInt("user_id"));
 				policy.setPolicyName(rs.getString("name"));
 				policy.setAmountPaid(rs.getFloat("amount_paid"));
 				// java.util.Date dbSqlDateConverted = new

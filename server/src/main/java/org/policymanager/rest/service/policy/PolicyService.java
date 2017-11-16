@@ -5,12 +5,13 @@ package org.policymanager.rest.service.policy;
 
 import java.util.List;
 
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -19,6 +20,7 @@ import javax.ws.rs.core.UriInfo;
 
 import org.apache.log4j.Logger;
 import org.policymanager.rest.ErrorCode;
+import org.policymanager.rest.service.auth.AuthManager;
 
 /**
  * @author gopikrishna
@@ -31,59 +33,102 @@ public class PolicyService {
 	static final Logger logger = Logger.getLogger(PolicyService.class);
 
 	PolicyManager pManager = new PolicyManager();
+	AuthManager authManager = new AuthManager();
 
 	public PolicyService() {
 	}
 
-	@PermitAll
+	@RolesAllowed("ADMIN")
 	@GET
-	@Path("/query")
+	@Path("/query/user/{param}")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getPolicy(@Context UriInfo info) {
+	public Response getPolicyForUserId(@PathParam("param") int userId) {
 
 		logger.debug("Start");
 
+		ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_READ_FAILED, "No data found/Some error occurred.");
+
 		try {
-			String param = info.getQueryParameters().getFirst("userId");
-
-			logger.debug("Parameter : " + param);
-
-			if (param != null) {
-				int userId = Integer.parseInt(param);
-
-				logger.debug("getting policies for user : " + userId);
-
+			logger.debug("getting policies for user : " + userId);
+			if (userId < 1) {
+				logger.warn("Invalid user_id");
+				error.setErrorStr("Invalid user_id");
+			} else {
 				List<Policy> policies = pManager.getPolicyForUser(userId);
 				if (policies == null || policies.size() < 1) {
-					return Response.status(204).entity("{}").build();
+					error.setErrorStr("No policies found.");
+					return Response.status(204).entity(error).build();
 				} else {
 					return Response.ok().entity(policies).build();
 				}
 			}
-
-			// Check for "policyNo"
-			param = info.getQueryParameters().getFirst("policyNo");
-			if (param != null) {
-				int policyNo = Integer.parseInt(param);
-
-				logger.debug("getting policy for policy no : " + policyNo);
-
-				Policy policy = pManager.getPolicy(policyNo);
-
-				if (policy != null) {
-					return Response.ok().entity(policy).build();
-				} else {
-					return Response.status(204).entity("{}").build();
-				}
-			}
-
 		} catch (Exception e) {
 			logger.error("Error : " + e.getMessage());
 		}
 
-		ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_READ_FAILED, "No data found/Some error occurred.");
 		return Response.serverError().entity(error).build();
 
+	}
+
+	@RolesAllowed("USER")
+	@GET
+	@Path("/query")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getPolicyForUser(@HeaderParam("authorization") String authString) {
+
+		ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_READ_FAILED, "No data found/Some error occurred.");
+
+		try {
+			// Get encoded username and password
+			final String token = authString.replaceFirst("Basic" + " ", "");
+			int userId = authManager.getUserIdForToken(token);
+			logger.debug("Token : (" + token + "), UserId : (" + userId + ")");
+
+			if (userId < 1) {
+				logger.warn("Invalid user_id");
+				error.setErrorStr("Invalid user_id");
+			} else {
+				logger.debug("getting policies for user : " + userId);
+
+				List<Policy> policies = pManager.getPolicyForUser(userId);
+				if (policies == null || policies.size() < 1) {
+					error.setErrorStr("No policies found.");
+					return Response.status(204).entity(error).build();
+				} else {
+					return Response.ok().entity(policies).build();
+				}
+			}
+		} catch (Exception e) {
+			logger.error("Error : " + e.getMessage());
+		}
+
+		return Response.serverError().entity(error).build();
+
+	}
+
+	@RolesAllowed("ADMIN")
+	@GET
+	@Path("/query/{param}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getPolicy(@PathParam("param") int policyNo) {
+
+		ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_READ_FAILED, "No data found/Some error occurred.");
+		try {
+			logger.debug("getting policy for policy no : " + policyNo);
+
+			Policy policy = pManager.getPolicy(policyNo);
+
+			if (policy != null) {
+				return Response.ok().entity(policy).build();
+			} else {
+				error.setErrorStr("No policies found.");
+				return Response.status(204).entity(error).build();
+			}
+		} catch (Exception e) {
+			logger.error("Error : " + e.getMessage());
+		}
+
+		return Response.serverError().entity(error).build();
 	}
 
 	@RolesAllowed("ADMIN")
@@ -112,6 +157,7 @@ public class PolicyService {
 		return Response.serverError().entity(error).build();
 	}
 
+	@RolesAllowed("ADMIN")
 	@POST
 	@Path("/edit")
 	@Consumes({ MediaType.APPLICATION_JSON })

@@ -1,9 +1,7 @@
 package org.policymanager.rest.service.auth;
 
-import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Base64;
-import java.util.StringTokenizer;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
@@ -28,37 +26,12 @@ public class AuthService {
 	UserManager userManager = new UserManager();
 	AuthManager authManager = new AuthManager();
 
-	public boolean authenticate(String authCredentials) {
-
-		if (null == authCredentials)
-			return false; // header value format will be "Basic encodedstring"
-							// for Basic
-		// authentication. Example"Basic YWRtaW46YWRtaW4="
-		final String encodedUserPassword = authCredentials.replaceFirst("Basic" + " ", "");
-		String usernameAndPassword = null;
-		try {
-			byte[] decodedBytes = Base64.getDecoder().decode(encodedUserPassword);
-			usernameAndPassword = new String(decodedBytes, "UTF-8");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		final StringTokenizer tokenizer = new StringTokenizer(usernameAndPassword, ":");
-		final String username = tokenizer.nextToken();
-		final String password = tokenizer.nextToken();
-
-		// we have fixed the userid and password as admin
-		// call some UserService/LDAP here
-		boolean authenticationStatus = "admin".equals(username) && "admin".equals(password);
-		return authenticationStatus;
-	}
-
 	@PermitAll
 	@Path("/login")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response authenticateUser(UserLogin userLogin) {
+	public Response userLogin(UserLogin userLogin) {
 		try {
 			// Authenticate the user using the credentials provided
 			UserToken userToken = authenticate(userLogin);
@@ -78,7 +51,7 @@ public class AuthService {
 	@Path("/logout")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response logoutUser(@HeaderParam("authorization") String authString) {
+	public Response useLogout(@HeaderParam("authorization") String authString) {
 		try {
 			// header value format will be "Basic encodedstring"
 			// for Basic authentication.
@@ -149,7 +122,7 @@ public class AuthService {
 
 					// Issue a token for the user
 					String token = issueToken();
-					logger.debug("Token generated for login :" + user.getLogin());
+					logger.debug("Token generated for login :" + user.getLogin() + ", token : " + token);
 
 					UserToken userToken = new UserToken(user.getUser_id(), user.getName_1(), token);
 					if (!authManager.addLogin(userToken)) {
@@ -172,8 +145,7 @@ public class AuthService {
 		SecureRandom random = new SecureRandom();
 		byte bytes[] = new byte[20];
 		random.nextBytes(bytes);
-		String token = bytes.toString();
-
+		String token = Base64.getEncoder().encodeToString(bytes);
 		return token;
 	}
 

@@ -1,6 +1,7 @@
 package org.policymanager.rest.service.user;
 
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -20,7 +21,7 @@ public class UserService {
 
 	UserManager userManager = new UserManager();
 
-	@PermitAll
+	@RolesAllowed("ADMIN")
 	@GET
 	@Path("/get")
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -70,6 +71,7 @@ public class UserService {
 			userObj.setLogin(login);
 
 			if (userManager.loginExists(login)) {
+				logger.debug("Login already exists : " + login);
 				ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_LOGIN_ALREADY_EXISTS,
 						"Login name already exists.");
 				return Response.ok().entity(error).build();
