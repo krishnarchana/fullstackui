@@ -70,6 +70,31 @@ public class PolicyService {
 
 	}
 
+	@RolesAllowed("ADMIN")
+	@GET
+	@Path("/all")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getPolicyForUserId() {
+
+		logger.debug("Getting all policies");
+
+		ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_READ_FAILED, "No data found/Some error occurred.");
+
+		try {
+			List<Policy> policies = pManager.getAllPolicies();
+			if (policies == null || policies.size() < 1) {
+				error.setErrorStr("No policies found.");
+				return Response.status(204).entity(error).build();
+			} else {
+				return Response.ok().entity(policies).build();
+			}
+		} catch (Exception e) {
+			logger.error("Error : " + e.getMessage());
+		}
+
+		return Response.serverError().entity(error).build();
+	}
+
 	@RolesAllowed("USER")
 	@GET
 	@Path("/query")

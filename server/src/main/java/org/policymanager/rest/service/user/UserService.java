@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
+import org.policymanager.exception.InvalidRequestException;
 import org.policymanager.rest.ErrorCode;
 
 @Path("/user")
@@ -25,7 +26,7 @@ public class UserService {
 	@GET
 	@Path("/get")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getUser(@QueryParam("user_id") int userId) {
+	public Response getUser(@QueryParam("user_id") int userId) throws InvalidRequestException {
 
 		ErrorCode errorCode = null;
 		if (userId < 1) {
@@ -56,15 +57,14 @@ public class UserService {
 	@Path("/add")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response addUser(User userObj) {
+	public Response addUser(User userObj) throws InvalidRequestException {
 
 		logger.debug("Add User : " + userObj);
 
 		try {
 			@SuppressWarnings("deprecation")
-
 			// Generate login based on name_1 + DDMM
-			String login = userObj.getName_1() + String.format("%02d", userObj.getDob().getDay())
+			String login = userObj.getName_1().substring(0, 4) + String.format("%02d", userObj.getDob().getDay())
 					+ String.format("%02d", userObj.getDob().getMonth());
 
 			logger.debug("New login name : " + login);
