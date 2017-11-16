@@ -17,7 +17,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
 import org.apache.log4j.Logger;
-import org.glassfish.jersey.internal.util.Base64;
 import org.policymanager.rest.service.auth.AuthManager;
 import org.policymanager.rest.service.user.User;
 import org.policymanager.rest.service.user.UserManager;

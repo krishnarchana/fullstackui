@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
-import org.policymanager.db.DbConnection;
 
 /**
  * Loads the properties from properties file
