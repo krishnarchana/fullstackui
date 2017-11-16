@@ -38,9 +38,15 @@ Authorization: Basic <token>
 2.3) (admin) GET http://localhost:8080/PolicyManagerServer/rest/policy/<policy_no>
 Authorization: Basic <token>
 
+2.4)  (admin):  GET http://localhost:8080/RESTfulExample/rest/policy/all
+Authorization: Basic <token>
+Returns all the policies in the policy table
+
 3) POST : http://localhost:8080/RESTfulExample/rest/policy/add
 Content-Type: application/json
 body: { "name":"Gopi Krishna","amount":100,"maturityDate":"2017-11-22","valid":true, "userId":1}
+
+
 
 
 
@@ -127,7 +133,7 @@ response : error : 401 status code
 logout
 ========
 POST http://localhost:8080/PolicyManagerServer/rest/auth/logout
-Authorization: Basic <bcase64-encode-token>
+Authorization: Basic token
  Ex : Authorization Basic W0JAM2U2MDNmYTA=
 response
 {
