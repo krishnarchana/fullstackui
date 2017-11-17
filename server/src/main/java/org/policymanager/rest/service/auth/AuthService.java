@@ -59,7 +59,8 @@ public class AuthService {
 			// Example"Basic YWRtaW46YWRtaW4="
 			final String encodedUserPassword = authString.replaceFirst("Basic" + " ", "");
 			String token = null;
-			// byte[] decodedBytes = Base64.getDecoder().decode(encodedUserPassword);
+			// byte[] decodedBytes =
+			// Base64.getDecoder().decode(encodedUserPassword);
 			byte[] decodedBytes = encodedUserPassword.getBytes();
 			token = new String(decodedBytes, "UTF-8");
 
@@ -108,12 +109,12 @@ public class AuthService {
 
 			User user = userManager.getUserForLogin(userLogin.getUsername());
 			if (user != null) {
-
 				if (authManager.isUserAlreadyLoggedIn(user.getUser_id())) {
 					logger.debug("User : " + user.getLogin() + " already logged in");
 					UserToken userToken = authManager.getToken(user.getUser_id());
 					if (userToken != null) {
 						userToken.setName(user.getName_1());
+						userToken.setType(user.getType());
 					}
 
 					return userToken;
@@ -132,6 +133,7 @@ public class AuthService {
 						return null;
 					}
 
+					userToken.setType(user.getType());
 					return userToken;
 				}
 			}
