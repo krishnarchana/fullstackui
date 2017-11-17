@@ -38,14 +38,14 @@ public class AuthService {
 			UserToken userToken = authenticate(userLogin);
 			if (userToken != null) {
 				// Return the token on the response
-				return Response.ok(userToken).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
+				return Response.ok(userToken).build();
 			}
 
 		} catch (Exception e) {
-			return Response.status(Response.Status.FORBIDDEN).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
+			return Response.status(Response.Status.FORBIDDEN).build();
 		}
 
-		return Response.status(Response.Status.UNAUTHORIZED).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity("Invalid username/password").build();
+		return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid username/password").build();
 	}
 
 	@PermitAll

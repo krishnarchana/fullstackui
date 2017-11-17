@@ -13,10 +13,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 
 import org.apache.log4j.Logger;
 import org.policymanager.rest.ErrorCode;
@@ -43,8 +41,11 @@ public class PolicyService {
 	@Path("/query/user/{param}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getPolicyForUserId(@PathParam("param") int userId) {
+
 		logger.debug("Start");
+
 		ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_READ_FAILED, "No data found/Some error occurred.");
+
 		try {
 			logger.debug("getting policies for user : " + userId);
 			if (userId < 1) {
@@ -54,15 +55,17 @@ public class PolicyService {
 				List<Policy> policies = pManager.getPolicyForUser(userId);
 				if (policies == null || policies.size() < 1) {
 					error.setErrorStr("No policies found.");
-					return Response.status(204).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").header("Access-Control-Allow-Headers", "*").entity(error).build();
+					return Response.status(204).entity(error).build();
 				} else {
-					return Response.ok().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").header("Access-Control-Allow-Headers", "*").entity(policies).build();
+					return Response.ok().entity(policies).build();
 				}
 			}
 		} catch (Exception e) {
 			logger.error("Error : " + e.getMessage());
 		}
+
 		return Response.serverError().entity(error).build();
+
 	}
 
 	@RolesAllowed("ADMIN")
@@ -70,21 +73,24 @@ public class PolicyService {
 	@Path("/all")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getPolicyForUserId() {
+
 		logger.debug("Getting all policies");
+
 		ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_READ_FAILED, "No data found/Some error occurred.");
+
 		try {
 			List<Policy> policies = pManager.getAllPolicies();
 			if (policies == null || policies.size() < 1) {
 				error.setErrorStr("No policies found.");
-				return Response.status(204).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS, HEAD").header("Access-Control-Allow-Headers", "*").entity(error).build();
+				return Response.status(204).entity(error).build();
 			} else {
-			   logger.info(Response.ok().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH,HEAD").header("Access-Control-Allow-Headers", "*").entity(policies).build());
-				return Response.ok().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH,HEAD").header("Access-Control-Allow-Headers", "*").entity(policies).build();
+				return Response.ok().entity(policies).build();
 			}
 		} catch (Exception e) {
 			logger.error("Error : " + e.getMessage());
 		}
-		return Response.serverError().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH,HEAD").header("Access-Control-Allow-Headers", "*").entity(error).build();
+
+		return Response.serverError().entity(error).build();
 	}
 
 	@RolesAllowed("USER")
@@ -92,7 +98,9 @@ public class PolicyService {
 	@Path("/query")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getPolicyForUser(@HeaderParam("authorization") String authString) {
+
 		ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_READ_FAILED, "No data found/Some error occurred.");
+
 		try {
 			// Get encoded username and password
 			final String token = authString.replaceFirst("Basic" + " ", "");
@@ -108,15 +116,17 @@ public class PolicyService {
 				List<Policy> policies = pManager.getPolicyForUser(userId);
 				if (policies == null || policies.size() < 1) {
 					error.setErrorStr("No policies found.");
-					return Response.status(204).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(error).build();
+					return Response.status(204).entity(error).build();
 				} else {
-					return Response.ok().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(policies).build();
+					return Response.ok().entity(policies).build();
 				}
 			}
 		} catch (Exception e) {
 			logger.error("Error : " + e.getMessage());
 		}
-		return Response.serverError().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(error).build();
+
+		return Response.serverError().entity(error).build();
+
 	}
 
 	@RolesAllowed("ADMIN")
@@ -132,15 +142,16 @@ public class PolicyService {
 			Policy policy = pManager.getPolicy(policyNo);
 
 			if (policy != null) {
-				return Response.ok().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(policy).build();
+				return Response.ok().entity(policy).build();
 			} else {
 				error.setErrorStr("No policies found.");
-				return Response.status(204).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(error).build();
+				return Response.status(204).entity(error).build();
 			}
 		} catch (Exception e) {
 			logger.error("Error : " + e.getMessage());
 		}
-		return Response.serverError().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(error).build();
+
+		return Response.serverError().entity(error).build();
 	}
 
 	@RolesAllowed("ADMIN")
@@ -149,21 +160,24 @@ public class PolicyService {
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response addPolicy(Policy policy) {
+
 		logger.debug("Add policy : " + policy);
+
 		try {
 			int policyNo = pManager.addPolicy(policy, false);
 			logger.debug("Reponse policyNo : " + policyNo);
 
 			if (policyNo > 0) {
-				return Response.ok().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(policyNo).build();
+				return Response.ok().entity(policyNo).build();
 			} else {
 				logger.warn("Failed to add policy record");
 			}
 		} catch (Exception e) {
 			logger.error("Error : " + e.getMessage());
 		}
+
 		ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_ADD_FAILED, "Adding failed.");
-		return Response.serverError().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(error).build();
+		return Response.serverError().entity(error).build();
 	}
 
 	@RolesAllowed("ADMIN")
@@ -180,7 +194,7 @@ public class PolicyService {
 				logger.debug("Reponse policyNo : " + policyNo);
 
 				if (policyNo > 0) {
-					return Response.ok().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(policyNo).build();
+					return Response.ok().entity(policyNo).build();
 				} else {
 					logger.warn("Failed to add policy record");
 				}
@@ -188,7 +202,8 @@ public class PolicyService {
 				logger.error("Error : " + e.getMessage());
 			}
 		}
+
 		ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_ADD_FAILED, "Update failed.");
-		return Response.serverError().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(error).build();
+		return Response.serverError().entity(error).build();
 	}
 }

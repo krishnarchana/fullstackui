@@ -51,6 +51,4 @@
     	<url-pattern>/rest/*</url-pattern>
   	</filter-mapping>
 	
-	
-
 </web-app>

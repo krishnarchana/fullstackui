@@ -27,10 +27,28 @@ Java REST Service
 Policy Service
 -----------------------
 1) GET http://localhost:8080/RESTfulExample/rest/policy/query?policyNo=1
-2) GET http://localhost:8080/RESTfulExample/rest/policy/query?userId=1
+
+2.1) (admin) USER: GET http://localhost:8080/PolicyManagerServer/rest/policy/query/user/<user_id>
+Authorization: Basic <token>
+
+// Get policies for the logged in user
+2.2) (user)  GET http://localhost:8080/PolicyManagerServer/rest/policy/query
+Authorization: Basic <token>
+
+2.3) (admin) GET http://localhost:8080/PolicyManagerServer/rest/policy/<policy_no>
+Authorization: Basic <token>
+
+2.4)  (admin):  GET http://localhost:8080/PolicyManagerServer/rest/policy/all
+Authorization: Basic <token>
+Returns all the policies in the policy table
+
 3) POST : http://localhost:8080/RESTfulExample/rest/policy/add
 Content-Type: application/json
 body: { "name":"Gopi Krishna","amount":100,"maturityDate":"2017-11-22","valid":true, "userId":1}
+
+
+
+
 
 4) POST : http://localhost:8080/RESTfulExample/rest/policy/edit
 Content-Type: application/json
@@ -89,5 +107,36 @@ Response Failed : (user_id doesn't exists)
 {
 "errorCode": -4,
 "errorStr": "User doesn't exists."
+}
+
+-------------
+login 
+POST : http://localhost:8080/PolicyManagerServer/rest/auth/login
+Content-Type: application/json
+body: {
+  "username": "Admin",
+  "password": "Admin"
+}
+
+response :
+{
+"userId": 1,
+"token": "[B@2f55498a",
+"name": "Administrator",
+"login_time": 1510813529514
+}
+
+response : error : 401 status code
+
+
+
+logout
+========
+GET http://localhost:8080/PolicyManagerServer/rest/auth/logout
+Authorization: Basic token
+ Ex : Authorization Basic W0JAM2U2MDNmYTA=
+response
+{
+"success": "User logged out"
 }
 

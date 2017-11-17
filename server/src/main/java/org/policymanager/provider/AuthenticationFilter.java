@@ -17,7 +17,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
 import org.apache.log4j.Logger;
-import org.glassfish.jersey.internal.util.Base64;
 import org.policymanager.rest.service.auth.AuthManager;
 import org.policymanager.rest.service.user.User;
 import org.policymanager.rest.service.user.UserManager;
@@ -101,29 +100,30 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
 		}
 	}
 
-	private boolean isUserAllowed(final String username, final String password, final Set<String> rolesSet) {
-		boolean isAllowed = false;
 
-		logger.debug("u : " + username + ", pass : " + password + ", role : " + rolesSet);
-
-		// Step 1. Fetch password from database and match with password in
-		// argument
-		// If both match then get the defined role for user from database and
-		// continue; else return isAllowed [false]
-		// Access the database and do this part yourself
-		// String userRole = userMgr.getUserRole(username);
-
-		if (username.equals("Admin") && password.equals("Admin")) {
-			String userRole = "ADMIN";
-
-			// Step 2. Verify user role
-			if (rolesSet.contains(userRole)) {
-				isAllowed = true;
-			}
-		}
-
-		return isAllowed;
-	}
+//	private boolean isUserAllowed(final String username, final String password, final Set<String> rolesSet) {
+//		boolean isAllowed = false;
+//
+//		logger.debug("u : " + username + ", pass : " + password + ", role : " + rolesSet);
+//
+//		// Step 1. Fetch password from database and match with password in
+//		// argument
+//		// If both match then get the defined role for user from database and
+//		// continue; else return isAllowed [false]
+//		// Access the database and do this part yourself
+//		// String userRole = userMgr.getUserRole(username);
+//
+//		if (username.equals("Admin") && password.equals("Admin")) {
+//			String userRole = "ADMIN";
+//
+//			// Step 2. Verify user role
+//			if (rolesSet.contains(userRole)) {
+//				isAllowed = true;
+//			}
+//		}
+//
+//		return isAllowed;
+//	}
 
 	private boolean isUserAllowed(final String token, final Set<String> rolesSet) {
 		boolean isAllowed = false;
