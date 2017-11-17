@@ -42,7 +42,7 @@ public class AuthService {
 			}
 
 		} catch (Exception e) {
-			return Response.status(Response.Status.FORBIDDEN).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity("{\"error\":\"User not authenticated\"}").build();
+			return Response.status(Response.Status.FORBIDDEN).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
 		}
 
 		return Response.status(Response.Status.UNAUTHORIZED).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity("Invalid username/password").build();
@@ -77,14 +77,13 @@ public class AuthService {
 				return Response.ok().entity("{\"success\":\"User logged out\"}").header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
 			} else {
 				logger.error("Failed to log out");
-				return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-						.entity("{\"error\":\"User logged failed.\"}").header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
+				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\"error\":\"User logged failed.\"}").header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
 			}
 		} catch (Exception e) {
 			logger.error("Failed to logout : " + e);
 		}
 
-		return Response.status(Response.Status.UNAUTHORIZED).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity("Invalid username/password").build();
+		return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid username/password").build();
 	}
 
 	/**
