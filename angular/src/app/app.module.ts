@@ -22,11 +22,9 @@ import { EqualValidatorDirective } from './equal-validator.directive';
 import { AlertService } from './alert.service';
 import { LoginAuthenticationService } from './loginAuth.service';
 import { RegistrationService } from './register.service';
-import { UserService } from './user.service';
 import { RegisterUser } from './registerUser';
 import { UserpageService } from './userpage-service';
 import { User } from './User';
-import { RegUser } from './RegUser';
 import { Policy } from './Policy';
 import { UserLogin } from './UserLogin';
 
@@ -56,10 +54,8 @@ import { UserLogin } from './UserLogin';
     AlertService,
     LoginAuthenticationService,
     RegistrationService,
-    UserService,
     RegisterUser,
     User,
-    RegUser,
     UserpageService,
     Policy,
     UserLogin
