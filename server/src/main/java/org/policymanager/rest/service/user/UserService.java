@@ -83,7 +83,8 @@ public class UserService {
 			logger.debug("Reponse userId : " + userId);
 
 			if (userId > 0) {
-				String responsed = "{\"userId\":" + userId + ",\"login\":\"" + login + "\"}";
+				String responsed = "{\"userId\":" + userId + ",\"login\":\"" + login + "\",\"password\":\""
+						+ userObj.getPassword() + "\"}";
 				return Response.ok().entity(responsed).build();
 			} else {
 				logger.warn("Failed to add user record");

@@ -11,6 +11,8 @@ public class UserToken {
 	String token;
 	@JsonProperty
 	String name;
+	@JsonProperty
+	int type = 0;
 	
 	Timestamp login_time;
 
@@ -33,6 +35,10 @@ public class UserToken {
 		return token;
 	}
 
+	public int getType() {
+		return type;
+	}
+
 	public int getUserId() {
 		return userId;
 	}
@@ -47,6 +53,10 @@ public class UserToken {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public void setType(int type) {
+		this.type = type;
 	}
 
 	public void setUserId(int userId) {
