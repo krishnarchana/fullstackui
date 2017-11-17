@@ -17,8 +17,10 @@ import { RegisterRoutingModule } from './register-routing';
 import { UserPageComponent } from './userpage.component';
 import { UserPageRoutingModule } from './userpage-routing';
 
+//validator
 import { EqualValidatorDirective } from './equal-validator.directive';
 
+//services
 import { AlertService } from './alert.service';
 import { LoginAuthenticationService } from './loginAuth.service';
 import { RegistrationService } from './register.service';
