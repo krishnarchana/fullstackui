@@ -65,14 +65,14 @@
 					<div class="form-group">
 						<label for="password" class="col-md-4 control-label labelMandatory">Password</label>
 						<div class="col-md-8" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-							<input type="password" minlength="8" maxlength="20" name="password" validateEqual="confirmPassword" reverse="true" [(ngModel)]="model.password" #password="ngModel" class="form-control" required>
+							<input type="password" minlength="4" maxlength="20" name="password" validateEqual="confirmPassword" reverse="true" [(ngModel)]="model.password" #password="ngModel" class="form-control" required>
 							<div *ngIf="f.submitted && !password.valid" class="help-block">Password is required (minimum 8 characters)</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="confirmPassword" class="col-md-4 control-label labelMandatory">Confirm Password</label>
 						<div class="col-md-8" [ngClass]="{ 'has-error': f.submitted && !confirmPassword.valid }">
-							<input type="password" minlength="8" maxlength="20" name="confirmPassword" validateEqual="password" reverse="false" [(ngModel)]="model.confirmPassword" #confirmPassword="ngModel" class="form-control" required>
+							<input type="password" minlength="4" maxlength="20" name="confirmPassword" validateEqual="password" reverse="false" [(ngModel)]="model1.confirmPassword" #confirmPassword="ngModel" class="form-control" required>
 							<!--div *ngIf="form.controls.confirmPassword.errors?.MatchPassword" class="help-block">Password not match</div-->
 							<div *ngIf="f.submitted && !confirmPassword.valid" class="help-block">Password is required (minimum 8 characters)</div>
 							<div [hidden]="confirmPassword.valid || (confirmPassword.pristine && !f.submitted)" class="text-danger">Password mismatch</div>

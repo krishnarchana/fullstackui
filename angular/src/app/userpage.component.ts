@@ -16,10 +16,25 @@ public  editRowId: any;
 public  editRowName: string;
 public editing:boolean=false;
 public editAmount:any;
+public compareDate;
+public userPerm;
+public flag: boolean;
  constructor(private route: ActivatedRoute,
    private userService: UserpageService,
+   private router: Router,
  public model: Policy) {
- let navextras: NavigationExtras;
+  this.userPerm = this.route.snapshot.queryParams["Authorization"];
+  if(this.userPerm=='Administrator'){
+    this.flag=true;
+  }else{
+    this.flag=false;
+  }
+   console.log("auth",this.route.snapshot.queryParams["Authorization"]);
+   //this.message =JSON.parse(this.msg);
+
+ this.compareDate =  new Date();
+ console.log(this.compareDate);
+ //let navextras: NavigationExtras;
  this.userService.getPolicies()
    .subscribe(
        data => {
@@ -29,7 +44,7 @@ public editAmount:any;
           //this.msg=JSON.stringify(data);
           this.msg =data;
           this.message=this.msg;
-           console.log("policies",this.message);
+          console.log("policies",this.message);
        },
        error => {
            //this.alertService.error(error);
@@ -43,9 +58,10 @@ toggle(val){
     this.editAmount = val;
   }
 
-  saveRow(name, details){
+  saveRow(name, details, plcNo){
     this.model.policyName = name;
     this.model.policyDetails = details;
+    this.model.policyNo = plcNo;
     console.log(this.model);
     this.userService.saveEditItem(this.model)
         .subscribe(
@@ -75,19 +91,17 @@ toggle(val){
     }
 
   logout() {
-      //this.regService.register(this.model)
-          //.subscribe(
-          //    data => {
-          //      console.log("good good:",data);
-          //      this.router.navigate(['/login']);
-
+      this.userService.logout()
+          .subscribe(
+              data => {
+                console.log("good good:",data);
+                this.router.navigate(['/login']);
+                localStorage.removeItem('Authorization');
                 //setTimeout(() => { this.loginComponent.alertService.success("User Registration Successfull!!"); }, 3000);
-
-
-          //    },
-          //    error => {
+              },
+              error => {
           //        this.alertService.error(error);
           //        this.loading = false;
-          //    });
+              });
   }
 }

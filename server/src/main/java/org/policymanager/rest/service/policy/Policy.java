@@ -30,7 +30,7 @@ public class Policy {
 	
 	@JsonProperty("details")
 	private String policyDetails;
-
+	
 	private int userId = 0;
 
 	/**
@@ -96,10 +96,10 @@ public class Policy {
 		this.policyDetails = policyDetails;
 	}
 
+
 	@Override
 	public String toString() {
 		return "No : " + policyNo + ", Name : " + policyName + ", Amount : " + amountPaid + ", Maturity : "
-				+ maturityDate + ", Valid : " + policyValid + ", policyDetails : " + policyDetails;
+				+ maturityDate + ", Valid " + policyValid + ", policyDetails : " + policyDetails;
 	}
-
 }

@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { UserLogin } from './UserLogin';
 
 @Injectable()
 export class LoginAuthenticationService {
   headers: Headers;
   options: RequestOptions;
 private getURL = "http://localhost:8080/RESTfulExample/rest/hello/gopi";
-    constructor(private http: Http) {}
+    constructor(private model:UserLogin, private http: Http) {}
 
     //getData():Observable<any>{
     //console.log("1212");
@@ -20,16 +21,17 @@ private getURL = "http://localhost:8080/RESTfulExample/rest/hello/gopi";
 
     }
 
-    login(userid: string, password: string): Observable<any> {
+    login(model:UserLogin): Observable<any> {
       this.headers = new Headers({ 'Content-Type': 'application/json' });
        this.options = new RequestOptions({ headers: this.headers });
     //  var headers = new Headers();
       //headers.append('Access-Control-Allow-Headers', 'Access-Control-Allow-Origin');
       //headers.append('Access-Control-Allow-Origin', "*"); x-www-form-urlencoded
-      var creds = 'userid=' + userid + '&password='+password;
-      let body = JSON.stringify(creds);
+      //var creds = 'userid=' + userid + '&password='+password;
+      let body = JSON.stringify(model);
       //headers.append('Content-Type', 'application/json');
-        return this.http.post('http://localhost:8080/JerseyDemos/rest/user/get', body, this.options)
+        //return this.http.post('http://localhost:8080/JerseyDemos/rest/user/get', body, this.options)
+        return this.http.post('http://localhost:8080/JerseyDemos/rest/auth/login', body, this.options)
             .map((response: Response) => response.json());
           //  response.json();
                 // login successful if there's a jwt token in the response
@@ -43,6 +45,6 @@ private getURL = "http://localhost:8080/RESTfulExample/rest/hello/gopi";
 
     logout() {
         // remove user from local storage to log user out
-        //localStorage.removeItem('currentUser');
+        //localStorage.removeItem('Authorization');
     }
 }

@@ -15,6 +15,8 @@ import { LoginComponent } from './login.component';
 
 export class RegisterComponent implements OnInit {
   //model: any = {};
+    public model1:any={};
+  successMsg: string;
   @ViewChild('birthDate')birthDate: string;
   loading = false;
   constructor(
@@ -51,9 +53,10 @@ export class RegisterComponent implements OnInit {
           .subscribe(
               data => {
                 console.log("good good:",data);
+                this.successMsg = "Login with the " + data.login + " and registered password";
                 this.router.navigate(['/login']);
 
-                setTimeout(() => { this.loginComponent.alertService.success("User Registration Successfull!!"); }, 3000);
+                setTimeout(() => { this.loginComponent.alertService.success(this.successMsg); }, 1000);
               },
               error => {
                   this.alertService.error(error);

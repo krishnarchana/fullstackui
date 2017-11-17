@@ -1,25 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras, Params } from '@angular/router';
 
 import { AlertService } from './alert.service';
 import { LoginAuthenticationService } from './loginAuth.service';
+import { UserLogin } from './UserLogin';
 
 @Component({
   moduleId: module.id,
   templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
-  model: any = {};
+  //model: any = {};
     loading = false;
     returnUrl: string;
     constructor(
         private route: ActivatedRoute,
         private router: Router,
+        private model: UserLogin,
         private authenticationService: LoginAuthenticationService,
         public alertService: AlertService) {
           }
 
     ngOnInit() {
+    //  console.log(localStorage.getItem('Authorization'));
+      //  console.log(localStorage.removeItem('Authorization'));
+    //      console.log("hi",localStorage.getItem('Authorization'));
         // reset login status
       //  this.authenticationService.logout();
       //console.log("here2");
@@ -39,11 +44,21 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-      this.authenticationService.login(this.model.userid, this.model.password)
+      console.log(this.model);
+      let navextras: NavigationExtras;
+      this.authenticationService.login(this.model)
+
         .subscribe(
             data => {
-                console.log("good",data);
-                 this.router.navigate(['/userPage']);
+               console.log("good",data);
+                let user = data;
+              //  console.log(user.token);
+                if (user && user.token) {
+                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    localStorage.setItem('Authorization', user.token);
+                }
+                navextras={queryParams:{"Authorization": user.name}};
+                this.router.navigate(['/userPage'], navextras);
             },
             error => {
                 this.alertService.error(error);

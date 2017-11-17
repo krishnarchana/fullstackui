@@ -70,7 +70,7 @@ public class PolicyManager {
 			while (rs.next()) {
 				Policy policy = new Policy();
 				policy.setPolicyNo(rs.getInt("policy_no"));
-				policy.setPolicyNo(rs.getInt("user_id"));
+				policy.setUserId(rs.getInt("user_id"));
 				policy.setPolicyName(rs.getString("name"));
 				policy.setAmountPaid(rs.getFloat("amount_paid"));
 				// java.util.Date dbSqlDateConverted = new
@@ -78,6 +78,7 @@ public class PolicyManager {
 				policy.setMaturityDate(rs.getDate("end_date"));
 				policy.setPolicyValid(rs.getBoolean("policy_valid"));
 				policy.setPolicyDetails(rs.getString("policy_details"));
+
 
 				policies.add(policy);
 			}
@@ -115,12 +116,13 @@ public class PolicyManager {
 			if (rs.next()) {
 				policy = new Policy();
 				policy.setPolicyNo(rs.getInt("policy_no"));
-				policy.setPolicyNo(rs.getInt("user_id"));
+				policy.setUserId(rs.getInt("user_id"));
 				policy.setPolicyName(rs.getString("name"));
 				policy.setAmountPaid(rs.getFloat("amount_paid"));
 				policy.setMaturityDate(rs.getDate("end_date"));
 				policy.setPolicyValid(rs.getBoolean("policy_valid"));
 				policy.setPolicyDetails(rs.getString("policy_details"));
+
 			}
 		} catch (Exception e) {
 			throw e;
@@ -158,7 +160,7 @@ public class PolicyManager {
 			while (rs.next()) {
 				Policy policy = new Policy();
 				policy.setPolicyNo(rs.getInt("policy_no"));
-				policy.setPolicyNo(rs.getInt("user_id"));
+				policy.setUserId(rs.getInt("user_id"));
 				policy.setPolicyName(rs.getString("name"));
 				policy.setAmountPaid(rs.getFloat("amount_paid"));
 				// java.util.Date dbSqlDateConverted = new
@@ -166,6 +168,7 @@ public class PolicyManager {
 				policy.setMaturityDate(rs.getDate("end_date"));
 				policy.setPolicyValid(rs.getBoolean("policy_valid"));
 				policy.setPolicyDetails(rs.getString("policy_details"));
+
 
 				policies.add(policy);
 			}
@@ -210,12 +213,13 @@ public class PolicyManager {
 
 			String query = null;
 			if (isUpdate) {
+				//query = " UPDATE policy SET user_id = ?, name = ?, amount_paid = ?, end_date = ?, policy_valid = ? WHERE policy_no = ?";
 				query = " UPDATE policy SET user_id = ?, name = ?, amount_paid = ?, end_date = ?, policy_valid = ?, policy_details = ? WHERE policy_no = ?";
 				logger.debug("Updating record");
 			} else {
 				// Insert record
-				query = " INSERT INTO policy(user_id, name, amount_paid, end_date, policy_valid, policy_details)"
-						+ " values (?, ?, ?, ?, ?)";
+				query = " INSERT INTO policy(user_id, name, amount_paid, end_date, policy_valid, policy_details)" 
+				+ " values (?, ?, ?, ?, ?, ?)";
 				logger.debug("Inserting record");
 			}
 
@@ -228,6 +232,7 @@ public class PolicyManager {
 			preparedStmt.setDate(4, policy.getMaturityDate());
 			preparedStmt.setBoolean(5, policy.isPolicyValid());
 			preparedStmt.setString(7, policy.getPolicyDetails());
+
 
 			if (isUpdate) {
 				preparedStmt.setInt(6, policy.getPolicyNo());
@@ -256,9 +261,11 @@ public class PolicyManager {
 		} catch (Exception e) {
 			throw e;
 		}
+
 		logger.debug("Policy No : " + policyNo);
 
 		// returns the newly generated policyNo
 		return policyNo;
 	}
+
 }

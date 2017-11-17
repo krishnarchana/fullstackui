@@ -11,7 +11,7 @@ export class RegistrationService {
     constructor(public model: User, private http: Http) {}
 
     register(model: User): Observable<any> {
-    this.headers = new Headers({ 'Content-Type': 'application/json' });
+     this.headers = new Headers({ 'Content-Type': 'application/json' });
      this.options = new RequestOptions({ headers: this.headers });
      let body = JSON.stringify(model);
       //var creds = 'firstname=' + model.firstname + '&lastname='+model.lastname + '&dateofbirth='+model.dateofbirth + '&address='+model.address + '&contactno='+model.contactno + '&email='+model.email + '&password='+model.password + '&confirmPassword='+model.confirmPassword;
