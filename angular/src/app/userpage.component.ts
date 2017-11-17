@@ -23,74 +23,74 @@ export class UserPageComponent implements OnInit {
   public userPerm;
   public flag: boolean;
 
- constructor(private route: ActivatedRoute,
-             private userService: UserpageService,
-             private router: Router,
-             public model: Policy,
-             public alertService: AlertService) {
+  constructor(private route: ActivatedRoute,
+    private userService: UserpageService,
+    private router: Router,
+    public model: Policy,
+    public alertService: AlertService) {
 
-              this.userPerm = this.route.snapshot.queryParams["Authorization"];
-              this.compareDate =  new Date();
+      this.userPerm = this.route.snapshot.queryParams["Authorization"];
+      this.compareDate =  new Date();
 
-              if(this.userPerm=='Administrator'){
-                this.flag=true;
-                this.userService.getPolicies()
-                .subscribe(
-                 data => {
-                    this.msg =data;
-                    this.message=this.msg;
-                    console.log("Admin policies",this.message);
-                 },
-                 error => {
-                     this.alertService.error(error);
-                 });
-               }else{
-                 this.flag=false;
-                 this.userService.getUserPolicies()
-                 .subscribe(
-                  data => {
-                  this.msg =data;
-                  this.message=this.msg;
-                  console.log("User policies",this.message);
-                 },
-                 error => {
-                     this.alertService.error(error);
-                 });
-               }
-          }
-
-          toggle(val){
-            this.editRowId = val;
-            this.editRowName = val;
-            this.editAmount = val;
-          }
-
-  saveRow(name, details, plcNo){
-    this.model.policyName = name;
-    this.model.policyDetails = details;
-    this.model.policyNo = plcNo;
-    this.userService.saveEditItem(this.model)
+      if(this.userPerm=='Administrator'){
+        this.flag=true;
+        this.userService.getPolicies()
         .subscribe(
+          data => {
+            this.msg =data;
+            this.message=this.msg;
+            console.log("Admin policies",this.message);
+          },
+          error => {
+            this.alertService.error(error);
+          });
+        }else{
+          this.flag=false;
+          this.userService.getUserPolicies()
+          .subscribe(
+            data => {
+              this.msg =data;
+              this.message=this.msg;
+              console.log("User policies",this.message);
+            },
+            error => {
+              this.alertService.error(error);
+            });
+          }
+        }
+
+        toggle(val){
+          this.editRowId = val;
+          this.editRowName = val;
+          this.editAmount = val;
+        }
+
+        saveRow(name, details, plcNo){
+          this.model.policyName = name;
+          this.model.policyDetails = details;
+          this.model.policyNo = plcNo;
+          this.userService.saveEditItem(this.model)
+          .subscribe(
             data => {
               console.log("edit success:",data);
             },
             error => {
               this.alertService.error(error);
             });
-  }
+          }
 
-    ngOnInit() {}
+          ngOnInit() {}
 
-    logout() {
-        this.userService.logout()
-        .subscribe(
-        data => {
-          console.log("logout:",data);
-          this.router.navigate(['/login']);
-          localStorage.removeItem('Authorization');
-        },
-        error => {
-          this.alertService.error(error);
-        });
-    }
-}
+          logout() {
+            this.userService.logout()
+            .subscribe(
+              data => {
+                console.log("logout:",data);
+                this.router.navigate(['/login']);
+                localStorage.removeItem('Authorization');
+              },
+              error => {
+                this.alertService.error(error);
+              });
+            }
+          }

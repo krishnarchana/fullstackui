@@ -30,11 +30,6 @@ import { RegUser } from './RegUser';
 import { Policy } from './Policy';
 import { UserLogin } from './UserLogin';
 
-// used to create fake backend
-//import { fakeBackendProvider } from './fake.background';
-//import { MockBackend, MockConnection } from '@angular/http/testing';
-//import { BaseRequestOptions } from '@angular/http';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,19 +53,18 @@ import { UserLogin } from './UserLogin';
     UserPageRoutingModule
   ],
   providers: [
-  AlertService,
-  LoginAuthenticationService,
-  RegistrationService,
-  UserService,
-  //MockBackend,
-  //BaseRequestOptions,
-  RegisterUser,
-  User,
-  RegUser,
-  UserpageService,
-  Policy,
-  UserLogin
-],
+    AlertService,
+    LoginAuthenticationService,
+    RegistrationService,
+    UserService,
+    RegisterUser,
+    User,
+    RegUser,
+    UserpageService,
+    Policy,
+    UserLogin
+  ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
