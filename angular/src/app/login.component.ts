@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
 
         .subscribe(
             data => {
-               console.log("good",data);
+               console.log("login",data);
                 let user = data;
               //  console.log(user.token);
                 if (user && user.token) {

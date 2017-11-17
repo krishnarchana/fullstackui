@@ -29,6 +29,15 @@ export class UserpageService {
           .map((response: Response) => response.json());
     }
 
+    getUserPolicies():Observable<any>{
+      this.headers = new Headers({ 'Content-Type': 'application/json' });
+     this.headers.append('Authorization', 'Basic ' + localStorage.getItem('Authorization'));
+    this.options = new RequestOptions({ headers: this.headers });
+
+      return this.http.get('http://localhost:8080/JerseyDemos/rest/policy/query', this.options)
+          .map((response: Response) => response.json());
+    }
+
     saveEditItem(model: Policy):Observable<any>{
       this.headers = new Headers({ 'Content-Type': 'application/json' });
        this.options = new RequestOptions({ headers: this.headers });

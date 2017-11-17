@@ -35,6 +35,7 @@ public flag: boolean;
  this.compareDate =  new Date();
  console.log(this.compareDate);
  //let navextras: NavigationExtras;
+ if(this.userPerm=='Administrator'){
  this.userService.getPolicies()
    .subscribe(
        data => {
@@ -50,6 +51,23 @@ public flag: boolean;
            //this.alertService.error(error);
          //  this.loading = false;
        });
+     }else{
+       this.userService.getUserPolicies()
+         .subscribe(
+             data => {
+                 //this.message =data;
+                 //navextras={queryParams:{"message": JSON.stringify(data)}};
+                // this.msg = this.route.snapshot.queryParams["message"];
+                //this.msg=JSON.stringify(data);
+                this.msg =data;
+                this.message=this.msg;
+                console.log("policies",this.message);
+             },
+             error => {
+                 //this.alertService.error(error);
+               //  this.loading = false;
+             });
+     }
 }
 
 toggle(val){

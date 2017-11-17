@@ -53,7 +53,7 @@ export class RegisterComponent implements OnInit {
           .subscribe(
               data => {
                 console.log("good good:",data);
-                this.successMsg = "Login with the " + data.login + " and registered password";
+                this.successMsg = "Login with the " + data.login + " and provided password";
                 this.router.navigate(['/login']);
 
                 setTimeout(() => { this.loginComponent.alertService.success(this.successMsg); }, 1000);
