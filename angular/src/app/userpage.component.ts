@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras, Params } from '@angular/router';
+
 import { UserpageService } from './userpage-service';
 import { Policy } from './Policy';
+import { AlertService } from './alert.service';
 
 @Component({
   templateUrl: './userpage.component.html',
@@ -9,117 +11,86 @@ import { Policy } from './Policy';
 })
 
 export class UserPageComponent implements OnInit {
+
   public message:any[]=[];
   public msg:any;
   showEditable: boolean = false;
-public  editRowId: any;
-public  editRowName: string;
-public editing:boolean=false;
-public editAmount:any;
-public compareDate;
-public userPerm;
-public flag: boolean;
+  public editRowId: any;
+  public editRowName: string;
+  public editing:boolean=false;
+  public editAmount:any;
+  public compareDate;
+  public userPerm;
+  public flag: boolean;
+
  constructor(private route: ActivatedRoute,
-   private userService: UserpageService,
-   private router: Router,
- public model: Policy) {
-  this.userPerm = this.route.snapshot.queryParams["Authorization"];
-  if(this.userPerm=='Administrator'){
-    this.flag=true;
-  }else{
-    this.flag=false;
-  }
-   console.log("auth",this.route.snapshot.queryParams["Authorization"]);
-   //this.message =JSON.parse(this.msg);
+             private userService: UserpageService,
+             private router: Router,
+             public model: Policy,
+             public alertService: AlertService) {
 
- this.compareDate =  new Date();
- console.log(this.compareDate);
- //let navextras: NavigationExtras;
- if(this.userPerm=='Administrator'){
- this.userService.getPolicies()
-   .subscribe(
-       data => {
-           //this.message =data;
-           //navextras={queryParams:{"message": JSON.stringify(data)}};
-          // this.msg = this.route.snapshot.queryParams["message"];
-          //this.msg=JSON.stringify(data);
-          this.msg =data;
-          this.message=this.msg;
-          console.log("policies",this.message);
-       },
-       error => {
-           //this.alertService.error(error);
-         //  this.loading = false;
-       });
-     }else{
-       this.userService.getUserPolicies()
-         .subscribe(
-             data => {
-                 //this.message =data;
-                 //navextras={queryParams:{"message": JSON.stringify(data)}};
-                // this.msg = this.route.snapshot.queryParams["message"];
-                //this.msg=JSON.stringify(data);
-                this.msg =data;
-                this.message=this.msg;
-                console.log("policies",this.message);
-             },
-             error => {
-                 //this.alertService.error(error);
-               //  this.loading = false;
-             });
-     }
-}
+              this.userPerm = this.route.snapshot.queryParams["Authorization"];
+              this.compareDate =  new Date();
 
-toggle(val){
-    this.editRowId = val;
-    this.editRowName = val;
-    this.editAmount = val;
-  }
+              if(this.userPerm=='Administrator'){
+                this.flag=true;
+                this.userService.getPolicies()
+                .subscribe(
+                 data => {
+                    this.msg =data;
+                    this.message=this.msg;
+                    console.log("Admin policies",this.message);
+                 },
+                 error => {
+                     this.alertService.error(error);
+                 });
+               }else{
+                 this.flag=false;
+                 this.userService.getUserPolicies()
+                 .subscribe(
+                  data => {
+                  this.msg =data;
+                  this.message=this.msg;
+                  console.log("User policies",this.message);
+                 },
+                 error => {
+                     this.alertService.error(error);
+                 });
+               }
+          }
+
+          toggle(val){
+            this.editRowId = val;
+            this.editRowName = val;
+            this.editAmount = val;
+          }
 
   saveRow(name, details, plcNo){
     this.model.policyName = name;
     this.model.policyDetails = details;
     this.model.policyNo = plcNo;
-    console.log(this.model);
     this.userService.saveEditItem(this.model)
         .subscribe(
             data => {
               console.log("edit success:",data);
-              //  this.router.navigate(['/userPage']);
             },
             error => {
-                //
+              this.alertService.error(error);
             });
   }
 
-//this.msg = this.route.snapshot.queryParams["message"];
-//this.message =JSON.parse(this.msg);
-//console.log(this.message);
+    ngOnInit() {}
 
-
-//this.message = Array.of(this.message);
-//console.log("data ", this.message.length);
-//console.log(JSON.stringify(this.message));
-     //let company = JSON.parse(params.get('company'));
-    // console.log(JSON.stringify(company));
-    //}
-
-    ngOnInit() {
-
+    logout() {
+        this.userService.logout()
+        .subscribe(
+        data => {
+          console.log("logout:",data);
+          this.router.navigate(['/login']);
+          localStorage.removeItem('Authorization');
+        },
+        error => {
+          this.alertService.error(error);
+        });
     }
-
-  logout() {
-      this.userService.logout()
-          .subscribe(
-              data => {
-                console.log("good good:",data);
-                this.router.navigate(['/login']);
-                localStorage.removeItem('Authorization');
-                //setTimeout(() => { this.loginComponent.alertService.success("User Registration Successfull!!"); }, 3000);
-              },
-              error => {
-          //        this.alertService.error(error);
-          //        this.loading = false;
-              });
-  }
 }

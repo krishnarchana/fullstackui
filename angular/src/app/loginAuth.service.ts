@@ -2,49 +2,22 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+
 import { UserLogin } from './UserLogin';
 
 @Injectable()
 export class LoginAuthenticationService {
-  headers: Headers;
-  options: RequestOptions;
-private getURL = "http://localhost:8080/RESTfulExample/rest/hello/gopi";
+
+    headers: Headers;
+    options: RequestOptions;
+
     constructor(private model:UserLogin, private http: Http) {}
-
-    //getData():Observable<any>{
-    //console.log("1212");
-    //return this.http.get(this.getURL)
-        //.map((res:Response) => res);
-    //}
-    //  return this.http.post('http://localhost:8080/RESTfulExample/rest', JSON.stringify({ email: email, password: password }))
-    getData(){
-
-    }
 
     login(model:UserLogin): Observable<any> {
       this.headers = new Headers({ 'Content-Type': 'application/json' });
-       this.options = new RequestOptions({ headers: this.headers });
-    //  var headers = new Headers();
-      //headers.append('Access-Control-Allow-Headers', 'Access-Control-Allow-Origin');
-      //headers.append('Access-Control-Allow-Origin', "*"); x-www-form-urlencoded
-      //var creds = 'userid=' + userid + '&password='+password;
+      this.headers.append("Accept" , 'application/json');
+      this.options = new RequestOptions({ headers: this.headers });
       let body = JSON.stringify(model);
-      //headers.append('Content-Type', 'application/json');
-        //return this.http.post('http://localhost:8080/JerseyDemos/rest/user/get', body, this.options)
-        return this.http.post('http://localhost:8080/JerseyDemos/rest/auth/login', body, this.options)
-            .map((response: Response) => response.json());
-          //  response.json();
-                // login successful if there's a jwt token in the response
-                //let user = response.json();
-                //if (user && user.token) {
-                    // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    //localStorage.setItem('currentUser', JSON.stringify(user));
-              //  }
-          //  });
-    }
-
-    logout() {
-        // remove user from local storage to log user out
-        //localStorage.removeItem('Authorization');
+      return this.http.post('http://localhost:8080/JerseyDemos/rest/auth/login', body, this.options).map((response: Response) => response.json());
     }
 }
