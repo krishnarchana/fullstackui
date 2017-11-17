@@ -8,7 +8,7 @@ import java.sql.Date;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * @author venkat
+ * @author gopikrishna
  *
  */
 public class Policy {

@@ -12,7 +12,7 @@ import org.policymanager.db.DbConnection;
 /**
  * Application startup control
  * 
- * @author venkat
+ * @author gopikrishna
  */
 public class AppControl extends HttpServlet implements Serializable {
 
