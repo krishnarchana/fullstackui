@@ -25,7 +25,7 @@ export class UserpageService {
      this.headers.append('Authorization', 'Basic ' + localStorage.getItem('Authorization'));
     this.options = new RequestOptions({ headers: this.headers });
 
-      return this.http.get('http://localhost:8080/JerseyDemos/rest/policy/query/1', this.options)
+      return this.http.get('http://localhost:8080/JerseyDemos/rest/policy/all', this.options)
           .map((response: Response) => response.json());
     }
 
