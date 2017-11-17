@@ -14,7 +14,7 @@
 		</repository>
 	</repositories>
 	<properties>
-		<jersey2.version>2.26</jersey2.version>
+		<jersey2.version>2.26-b03</jersey2.version>
 		<jaxrs.version>2.1</jaxrs.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
