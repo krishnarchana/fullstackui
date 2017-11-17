@@ -17,6 +17,7 @@ INSERT INTO user (login, name_1, address, phone_1, email, password, dob, type)
 
 CREATE TABLE policy(policy_no INT AUTO_INCREMENT, 
 					user_id INT,
+					policy_details VARCHAR(100),
 					name VARCHAR(50), 
 					amount_paid FLOAT(7,2), 
 					end_date DATETIME, 
