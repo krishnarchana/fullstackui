@@ -70,7 +70,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
 			}
 
 			// Get encoded username and password
-			final String encodedUserPassword = authorization.get(0).replaceFirst(AUTHENTICATION_SCHEME + " ", "");
+			final String authString = authorization.get(0).replaceFirst(AUTHENTICATION_SCHEME + " ", "");
 
 			// Decode username and password
 			// String usernameAndPassword = new
@@ -84,7 +84,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
 
 			// String userToken = new
 			// String(Base64.decode(encodedUserPassword.getBytes()));
-			String userToken = new String(encodedUserPassword.getBytes());
+			String userToken = new String(authString.getBytes());
 
 			// Verify user access
 			if (method.isAnnotationPresent(RolesAllowed.class)) {
