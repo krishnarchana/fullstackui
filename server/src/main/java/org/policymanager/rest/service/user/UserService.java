@@ -32,22 +32,22 @@ public class UserService {
 		if (userId < 1) {
 			logger.warn("Invalid userId : " + userId);
 			errorCode = new ErrorCode(ErrorCode.ERROR_CODE_INVALID_USER_ID, "Invalid user");
-			return Response.serverError().entity(errorCode).build();
+			return Response.serverError().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(errorCode).build();
 		} else {
 
 			try {
 				logger.debug("Getting data for userId :" + userId);
 				User userObj = userManager.getUser(userId);
 				if (userObj != null) {
-					return Response.ok().entity(userObj).build();
+					return Response.ok().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(userObj).build();
 				}
 
 				errorCode = new ErrorCode(ErrorCode.ERROR_CODE_USER_DOESNT_EXISTS, "User doesn't exists.");
-				return Response.serverError().entity(errorCode).build();
+				return Response.serverError().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(errorCode).build();
 
 			} catch (Exception e) {
 				errorCode = new ErrorCode(ErrorCode.ERROR_CODE_EXCEPTION, "error occurred.");
-				return Response.serverError().entity(errorCode).build();
+				return Response.serverError().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(errorCode).build();
 			}
 		}
 	}
@@ -74,7 +74,7 @@ public class UserService {
 				logger.debug("Login already exists : " + login);
 				ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_LOGIN_ALREADY_EXISTS,
 						"Login name already exists.");
-				return Response.ok().entity(error).build();
+				return Response.ok().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(error).build();
 			}
 
 			userObj.setType(0); // non-admin
@@ -86,7 +86,7 @@ public class UserService {
 				//String responsed = "{\"userId\":" + userId + ",\"login\":\"" + login + "\",\"password\":\""
 						//+ userObj.getPassword() + "\"}";
 				String responsed = "{\"userId\":" + userId + ",\"login\":\"" + login + "}";
-				return Response.ok().entity(responsed).build();
+				return Response.ok().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(responsed).build();
 			} else {
 				logger.warn("Failed to add user record");
 			}
@@ -95,7 +95,7 @@ public class UserService {
 		}
 
 		ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_ADD_FAILED, "Adding failed.");
-		return Response.serverError().entity(error).build();
+		return Response.serverError().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(error).build();
 
 	}
 }
