@@ -1,5 +1,8 @@
 package org.policymanager.rest.service.user;
 
+import java.sql.Date;
+import java.util.Calendar;
+
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
@@ -62,12 +65,10 @@ public class UserService {
 		logger.debug("Add User : " + userObj);
 
 		try {
-			@SuppressWarnings("deprecation")
 			// Generate login based on name_1 + DDMM
-			String login = userObj.getName_1().substring(0, 4) + String.format("%02d", userObj.getDob().getDay())
-					+ String.format("%02d", userObj.getDob().getMonth());
-
+			String login = constructLoginName(userObj.getName_1(), userObj.getDob());
 			logger.debug("New login name : " + login);
+			
 			userObj.setLogin(login);
 
 			if (userManager.loginExists(login)) {
@@ -83,9 +84,10 @@ public class UserService {
 			logger.debug("Reponse userId : " + userId);
 
 			if (userId > 0) {
-				//String responsed = "{\"userId\":" + userId + ",\"login\":\"" + login + "\",\"password\":\""
-						//+ userObj.getPassword() + "\"}";
-				String responsed = "{\"userId\":" + userId + ",\"login\":\"" + login + "}";
+				// String responsed = "{\"userId\":" + userId + ",\"login\":\""
+				// + login + "\",\"password\":\""
+				// + userObj.getPassword() + "\"}";
+				String responsed = "{\"userId\":" + userId + ",\"login\":\"" + login + "\"}";
 				return Response.ok().entity(responsed).build();
 			} else {
 				logger.warn("Failed to add user record");
@@ -97,5 +99,23 @@ public class UserService {
 		ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_ADD_FAILED, "Adding failed.");
 		return Response.serverError().entity(error).build();
 
+	}
+
+	/**
+	 * Constructs login name based on predefined name and date format
+	 * 
+	 * @param name
+	 * @param date
+	 * @return
+	 */
+	private String constructLoginName(String name, Date date) {
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int month = cal.get(Calendar.MONTH) + 1; // add plus +1
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+
+		// Generate login based on name_1 + DDMM
+		return  name.substring(0, 4) + String.format("%02d", day) + String.format("%02d", month);
 	}
 }
