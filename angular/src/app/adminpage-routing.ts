@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { AdminPageComponent } from './adminpage.component';
 
 const adminpageRoutes: Routes = [
@@ -10,4 +11,5 @@ const adminpageRoutes: Routes = [
   imports: [ RouterModule.forRoot(adminpageRoutes) ],
   exports: [ RouterModule ]
 })
+
 export class AdminPageRoutingModule { }

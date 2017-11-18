@@ -7,29 +7,28 @@ import { Router } from '@angular/router';
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
+
 export class AppComponent {
+
   route: string;
   visability;
+  isIn = false;
+
   constructor(location: Location, router: Router) {
     router.events.subscribe((val) => {
-      //if (location.path() != '') {
-        this.route = location.path();
-      //  this.visability = false;
-      //} else {
-      //  this.route = 'login';
+      this.route = location.path();
 
-      //}
       if(this.route =='/login' || this.route =='/home'){
-      this.visability = true;
+        this.visability = true;
       }else{
-      this.visability = false;
+        this.visability = false;
       }
     });
   }
-  isIn = false;
 
- toggleState() { // click handler for navbar toggle
+  toggleState() { // click handler for navbar toggle
     const bool = this.isIn;
     this.isIn = bool === false ? true : false;
- }
+  }
+
 }

@@ -17,23 +17,18 @@ import { RegisterRoutingModule } from './register-routing';
 import { UserPageComponent } from './userpage.component';
 import { UserPageRoutingModule } from './userpage-routing';
 
+//validator
 import { EqualValidatorDirective } from './equal-validator.directive';
 
+//services
 import { AlertService } from './alert.service';
 import { LoginAuthenticationService } from './loginAuth.service';
 import { RegistrationService } from './register.service';
-import { UserService } from './user.service';
 import { RegisterUser } from './registerUser';
 import { UserpageService } from './userpage-service';
 import { User } from './User';
-import { RegUser } from './RegUser';
 import { Policy } from './Policy';
 import { UserLogin } from './UserLogin';
-
-// used to create fake backend
-//import { fakeBackendProvider } from './fake.background';
-//import { MockBackend, MockConnection } from '@angular/http/testing';
-//import { BaseRequestOptions } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -58,19 +53,16 @@ import { UserLogin } from './UserLogin';
     UserPageRoutingModule
   ],
   providers: [
-  AlertService,
-  LoginAuthenticationService,
-  RegistrationService,
-  UserService,
-  //MockBackend,
-  //BaseRequestOptions,
-  RegisterUser,
-  User,
-  RegUser,
-  UserpageService,
-  Policy,
-  UserLogin
-],
+    AlertService,
+    LoginAuthenticationService,
+    RegistrationService,
+    RegisterUser,
+    User,
+    UserpageService,
+    Policy,
+    UserLogin
+  ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

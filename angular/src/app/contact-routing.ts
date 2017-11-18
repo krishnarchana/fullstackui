@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { ContactComponent } from './contact.component';
 
 const contactRoutes: Routes = [
@@ -10,4 +11,5 @@ const contactRoutes: Routes = [
   imports: [ RouterModule.forRoot(contactRoutes) ],
   exports: [ RouterModule ]
 })
+
 export class ContactRoutingModule { }

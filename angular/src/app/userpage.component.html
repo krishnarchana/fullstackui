@@ -1,92 +1,94 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
-			<div class="container">
-				<h3 class="text-center">Policy Management System</h3>
-			</div>
-			<hr>
-			<div class="container">
-				<div id="navbar">
-				  <ul class="nav navbar-nav nav-pills pull-right">
-					<li><a (click)="logout()">Logout</a></li>
-				  </ul>
-				</div>
-			</div>
-		</nav>
-
-    <div class="jumbotron">
-      <div class="row">
-				<div class="col-md-12 col-md-offset-1">
-        	<p>Welcome {{userPerm}}</p>
-				</div>
-				<div class="col-md-12">
-					<div class="col-md-12 col-md-offset-2">
-						<p>Available Policies </p>
-					</div>
-					<div class="container col-md-6 col-md-offset-2">
-	<table class="table table-bordered">
-		<thead>
-			<tr>
-				<th>S.No</th>
-				<th>Policy Name</th>
-				<th>Policy Details</th>
-				<th *ngIf="flag"></th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor="let x of message; let i=index">
-				 <td *ngIf="x.amount == editAmount">
-					 {{ i+1 }}
-				 </td>
-				 <td *ngIf="x.amount !== editAmount">{{ i+1 }}</td>
-				 <td *ngIf="x.amount == editAmount">
-					 <input name="PolicyName" type="text" [(ngModel)]="x.name"/>
-				 </td>
-				 <td *ngIf="x.amount !== editAmount">{{x.name}}</td>
-				 <td *ngIf="x.amount == editAmount">
-					 <input name="PolicyDetails" type="text" [(ngModel)]="x.details"/>
-				 </td>
-				 <td *ngIf="x.amount !== editAmount">{{x.details}}</td>
-				 <td *ngIf="flag">
-		      <a (click)="toggle(x.amount)" *ngIf="x.amount !== editAmount">Edit</a>
-					<a (click)="saveRow(x.name, x.details, x.policyNo); editAmount='0'" *ngIf="x.amount == editAmount">Save</a>
-					<a (click)="editAmount='0'" *ngIf="x.amount == editAmount">Cancel</a>
-		    </td>
-	    </tr>
-		</tbody>
-	</table>
+	<div class="container">
+		<h3 class="text-center">Policy Management System</h3>
 	</div>
-				</div>
-
-				<div class="col-md-12" *ngIf="!flag">
-					<div class="col-md-12 col-md-offset-2">
-						<p>{{userPerm}} Policy details</p>
-					</div>
-					<div class="container col-md-9 col-md-offset-2">
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Policy No</th>
-        <th>Policy Name</th>
-        <th>Amount Paid</th>
-				<th>Policy End Date</th>
-				<th>Valid</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let x of message; let i=index">
-				<td class="success" *ngIf="(x.maturityDate | date:'y') >= (compareDate | date:'y')">{{ x.policyNo }}</td>
-			  <td class="danger" *ngIf="(x.maturityDate | date:'y') < (compareDate | date:'y')">{{ x.policyNo }}</td>
-				<td class="success" *ngIf="(x.maturityDate | date:'y') >= (compareDate | date:'y')">{{ x.name }}</td>
-				<td class="danger" *ngIf="(x.maturityDate | date:'y') < (compareDate | date:'y')">{{ x.name }}</td>
-				<td class="success" *ngIf="(x.maturityDate | date:'y') >= (compareDate | date:'y')">{{ x.amount }}</td>
-				<td class="danger" *ngIf="(x.maturityDate | date:'y') < (compareDate | date:'y')">{{ x.amount }}</td>
-				<td class="success" *ngIf="(x.maturityDate | date:'y') >= (compareDate | date:'y')">{{ x.maturityDate | date:'dd/MM/y'}}</td>
-				<td class="danger" *ngIf="(x.maturityDate | date:'y') < (compareDate | date:'y')">{{ x.maturityDate | date:'dd/MM/y'}}</td>
-				<td class="success" *ngIf="(x.maturityDate | date:'y') >= (compareDate | date:'y')">YES</td>
-				<td class="danger" *ngIf="(x.maturityDate | date:'y') < (compareDate | date:'y')">NO</td>
-			</tr>
-    </tbody>
-  </table>
+	<hr>
+	<div class="container">
+		<div id="navbar">
+			<ul class="nav navbar-nav nav-pills pull-right">
+				<li><a style="cursor: pointer" (click)="logout()">Logout</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="col-sm-7 col-sm-offset-3">
+	<alert></alert>
 </div>
-				</div>
-      </div>
-    </div>
+<div class="jumbotron">
+	<div class="row">
+		<div class="col-md-12 col-md-offset-1">
+			<p>Welcome {{userPerm}}</p>
+		</div>
+		<div class="col-md-12">
+			<div class="col-md-12 col-md-offset-2">
+				<p>Available Policies </p>
+			</div>
+			<div class="container col-md-6 col-md-offset-2">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>S.No</th>
+							<th>Policy Name</th>
+							<th>Policy Details</th>
+							<th *ngIf="flag"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let x of message; let i=index">
+							<td *ngIf="x.amount == editAmount">
+								{{ i+1 }}
+							</td>
+							<td *ngIf="x.amount !== editAmount">{{ i+1 }}</td>
+							<td *ngIf="x.amount == editAmount">
+								<input name="PolicyName" type="text" [(ngModel)]="x.name"/>
+							</td>
+							<td *ngIf="x.amount !== editAmount">{{x.name}}</td>
+							<td *ngIf="x.amount == editAmount">
+								<input name="PolicyDetails" type="text" [(ngModel)]="x.details"/>
+							</td>
+							<td *ngIf="x.amount !== editAmount">{{x.details}}</td>
+							<td *ngIf="flag">
+								<a (click)="toggle(x.amount)" *ngIf="x.amount !== editAmount">Edit</a>
+								<a (click)="saveRow(x.name, x.details, x.policyNo); editAmount='0'" *ngIf="x.amount == editAmount">Save</a>
+								<a (click)="editAmount='0'" *ngIf="x.amount == editAmount">Cancel</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="col-md-12" *ngIf="!flag">
+			<div class="col-md-12 col-md-offset-2">
+				<p>{{userPerm}} Policy details</p>
+			</div>
+			<div class="container col-md-9 col-md-offset-2">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Policy No</th>
+							<th>Policy Name</th>
+							<th>Amount Paid</th>
+							<th>Policy End Date</th>
+							<th>Valid</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let x of message; let i=index">
+							<td class="success" *ngIf="(x.maturityDate | date:'y') >= (compareDate | date:'y')">{{ x.policyNo }}</td>
+							<td class="danger" *ngIf="(x.maturityDate | date:'y') < (compareDate | date:'y')">{{ x.policyNo }}</td>
+							<td class="success" *ngIf="(x.maturityDate | date:'y') >= (compareDate | date:'y')">{{ x.name }}</td>
+							<td class="danger" *ngIf="(x.maturityDate | date:'y') < (compareDate | date:'y')">{{ x.name }}</td>
+							<td class="success" *ngIf="(x.maturityDate | date:'y') >= (compareDate | date:'y')">{{ x.amount }}</td>
+							<td class="danger" *ngIf="(x.maturityDate | date:'y') < (compareDate | date:'y')">{{ x.amount }}</td>
+							<td class="success" *ngIf="(x.maturityDate | date:'y') >= (compareDate | date:'y')">{{ x.maturityDate | date:'dd/MM/y'}}</td>
+							<td class="danger" *ngIf="(x.maturityDate | date:'y') < (compareDate | date:'y')">{{ x.maturityDate | date:'dd/MM/y'}}</td>
+							<td class="success" *ngIf="(x.maturityDate | date:'y') >= (compareDate | date:'y')">YES</td>
+							<td class="danger" *ngIf="(x.maturityDate | date:'y') < (compareDate | date:'y')">NO</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

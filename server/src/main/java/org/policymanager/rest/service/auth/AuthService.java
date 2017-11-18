@@ -38,14 +38,14 @@ public class AuthService {
 			UserToken userToken = authenticate(userLogin);
 			if (userToken != null) {
 				// Return the token on the response
-				return Response.ok(userToken).build();
+				return Response.ok(userToken).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
 			}
 
 		} catch (Exception e) {
-			return Response.status(Response.Status.FORBIDDEN).build();
+			return Response.status(Response.Status.FORBIDDEN).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
 		}
 
-		return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid username/password").build();
+		return Response.status(Response.Status.UNAUTHORIZED).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity("Invalid username/password").build();
 	}
 
 	@PermitAll
@@ -65,7 +65,7 @@ public class AuthService {
 			token = new String(decodedBytes, "UTF-8");
 
 			if (!isUserAuthenticated(token)) {
-				return Response.status(Response.Status.FORBIDDEN).entity("{\"error\":\"User not authenticated\"}")
+				return Response.status(Response.Status.FORBIDDEN).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity("{\"error\":\"User not authenticated\"}")
 						.build();
 			}
 
@@ -74,11 +74,10 @@ public class AuthService {
 			if (user_id != -1) {
 				authManager.deleteLogin(user_id);
 				logger.info("User logged out");
-				return Response.ok().entity("{\"success\":\"User logged out\"}").build();
+				return Response.ok().entity("{\"success\":\"User logged out\"}").header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
 			} else {
 				logger.error("Failed to log out");
-				return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-						.entity("{\"error\":\"User logged failed.\"}").build();
+				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\"error\":\"User logged failed.\"}").header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
 			}
 		} catch (Exception e) {
 			logger.error("Failed to logout : " + e);

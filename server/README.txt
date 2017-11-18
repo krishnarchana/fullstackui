@@ -60,12 +60,12 @@ User Service
 1) POST : add user
 http://localhost:8080/RESTfulExample/rest/user/add
 Content-Type: application/json
-body: {"name_1":"Venkat","name_2":"rao","address":"bangalore","phone":"+910097777","email":"test@gmail.com","password":"hellotest","dob":"2017-11-11"}
+body: {"name_1":"Gopi","name_2":"krishna","address":"bangalore","phone":"+910097777","email":"test@gmail.com","password":"hellotest","dob":"2017-11-11"}
 
 Response Success : 
 {
 "userId": 4,
-"login": "Venkat1230610"
+"login": "Gopi1230610"
 }
 
 response failure : 
