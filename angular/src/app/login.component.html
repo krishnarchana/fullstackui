@@ -6,7 +6,7 @@
         <alert></alert>
       </div>
     </div>
-    <form role="form" class="form-signin form-horizontal" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+    <form role="form" class="form-signin form-horizontal" name="form" (ngSubmit)="f.form.valid && login(f)" #f="ngForm" novalidate>
       <div class="form-group">
         <label for="username" class="col-sm-3 control-label">User ID</label>
         <div class="col-sm-9" [ngClass]="{ 'has-error': f.submitted && !username.valid }">

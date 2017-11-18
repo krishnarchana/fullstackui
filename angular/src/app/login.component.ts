@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras, Params } from '@angular/router';
+import {NgForm} from '@angular/forms';
 
 import { AlertService } from './alert.service';
 import { LoginAuthenticationService } from './loginAuth.service';
@@ -23,8 +24,8 @@ export class LoginComponent implements OnInit {
     public alertService: AlertService) {}
 
     ngOnInit() {}
-    
-    login() {
+
+    login(form: NgForm) {
       let navextras: NavigationExtras;
       this.authenticationService.login(this.model)
       .subscribe(
@@ -33,6 +34,7 @@ export class LoginComponent implements OnInit {
           let user = data;
           if (user && user.token) {
             localStorage.setItem('Authorization', user.token);
+              form.reset();
           }
           navextras={queryParams:{"Authorization": user.name}};
           this.router.navigate(['/userPage'], navextras);
