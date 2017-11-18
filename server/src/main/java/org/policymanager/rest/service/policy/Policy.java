@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Policy {
 
-	@JsonProperty
+	@JsonProperty("policyNo")
 	private int policyNo = 0;
 
 	@JsonProperty("name")
