@@ -38,14 +38,18 @@ public class AuthService {
 			UserToken userToken = authenticate(userLogin);
 			if (userToken != null) {
 				// Return the token on the response
-				return Response.ok(userToken).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
+				return Response.ok(userToken).header("Access-Control-Allow-Origin", "*")
+						.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
 			}
 
 		} catch (Exception e) {
-			return Response.status(Response.Status.FORBIDDEN).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
+			return Response.status(Response.Status.FORBIDDEN).header("Access-Control-Allow-Origin", "*")
+					.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
 		}
 
-		return Response.status(Response.Status.UNAUTHORIZED).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity("Invalid username/password").build();
+		return Response.status(Response.Status.UNAUTHORIZED).header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+				.entity("Invalid username/password").build();
 	}
 
 	@PermitAll
@@ -65,8 +69,9 @@ public class AuthService {
 			token = new String(decodedBytes, "UTF-8");
 
 			if (!isUserAuthenticated(token)) {
-				return Response.status(Response.Status.FORBIDDEN).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity("{\"error\":\"User not authenticated\"}")
-						.build();
+				return Response.status(Response.Status.FORBIDDEN).header("Access-Control-Allow-Origin", "*")
+						.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+						.entity("{\"error\":\"User not authenticated\"}").build();
 			}
 
 			logger.debug("Token : " + token);
@@ -74,10 +79,14 @@ public class AuthService {
 			if (user_id != -1) {
 				authManager.deleteLogin(user_id);
 				logger.info("User logged out");
-				return Response.ok().entity("{\"success\":\"User logged out\"}").header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
+				return Response.ok().entity("{\"success\":\"User logged out\"}")
+						.header("Access-Control-Allow-Origin", "*")
+						.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
 			} else {
 				logger.error("Failed to log out");
-				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\"error\":\"User logged failed.\"}").header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
+				return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+						.entity("{\"error\":\"User logged failed.\"}").header("Access-Control-Allow-Origin", "*")
+						.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
 			}
 		} catch (Exception e) {
 			logger.error("Failed to logout : " + e);
@@ -108,32 +117,39 @@ public class AuthService {
 
 			User user = userManager.getUserForLogin(userLogin.getUsername());
 			if (user != null) {
-				if (authManager.isUserAlreadyLoggedIn(user.getUser_id())) {
-					logger.debug("User : " + user.getLogin() + " already logged in");
-					UserToken userToken = authManager.getToken(user.getUser_id());
-					if (userToken != null) {
-						userToken.setName(user.getName_1());
-						userToken.setType(user.getType());
-					}
-
-					return userToken;
-				}
-
-				if (user.getPassword().equals(userLogin.getPassword())) {
+				
+				// Validate username and password
+				if (userLogin.getUsername().equals(user.getLogin())
+						&& user.getPassword().equals(userLogin.getPassword())) {
+					
 					logger.debug("login : " + userLogin.getUsername() + ", validated");
 
-					// Issue a token for the user
-					String token = issueToken();
-					logger.debug("Token generated for login :" + user.getLogin() + ", token : " + token);
+					// Check whether the user already authenticated
+					if (authManager.isUserAlreadyLoggedIn(user.getUser_id())) {
 
-					UserToken userToken = new UserToken(user.getUser_id(), user.getName_1(), token);
-					if (!authManager.addLogin(userToken)) {
-						logger.error("Failed to add token to db");
-						return null;
+						logger.debug("User : " + user.getLogin() + " already logged-in.");
+
+						UserToken userToken = authManager.getToken(user.getUser_id());
+						if (userToken != null) {
+							userToken.setName(user.getName_1());
+							userToken.setType(user.getType());
+						}
+
+						return userToken;
+					} else {
+						// Issue a token for the user
+						String token = issueToken();
+						logger.debug("Token generated for login :" + user.getLogin() + ", token : " + token);
+
+						UserToken userToken = new UserToken(user.getUser_id(), user.getName_1(), token);
+						if (!authManager.addLogin(userToken)) {
+							logger.error("Failed to add token to db");
+							return null;
+						}
+
+						userToken.setType(user.getType());
+						return userToken;
 					}
-
-					userToken.setType(user.getType());
-					return userToken;
 				}
 			}
 
