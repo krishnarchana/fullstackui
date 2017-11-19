@@ -8,8 +8,7 @@
       "root": "src",
       "outDir": "dist",
       "assets": [
-        "assets",
-        "js"
+        "assets"
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -23,8 +22,8 @@
         "assets/styles.css"
       ],
       "scripts": [
-        "js/jquery-3.2.1.min.js",
-        "js/bootstrap.min.js"
+        "assets/jquery-3.2.1.min.js",
+        "assets/bootstrap.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
