@@ -42,7 +42,8 @@ export class UserPageComponent implements OnInit {
             console.log("Admin policies",this.message);
           },
           error => {
-            this.alertService.error(error);
+            this.alertService.error(error.errorStr);
+            setTimeout(() => { this.alertService.clearMessage(); }, 2000);
           });
         }else{
           this.flag=false;
@@ -54,7 +55,8 @@ export class UserPageComponent implements OnInit {
               console.log("User policies",this.message);
             },
             error => {
-              this.alertService.error(error);
+              this.alertService.error(error.errorStr);
+              setTimeout(() => { this.alertService.clearMessage(); }, 2000);
             });
           }
         }
@@ -85,7 +87,7 @@ export class UserPageComponent implements OnInit {
             },
             error => {
              this.alertService.error("Edit unsuccessful!!")
-             setTimeout(() => { ;this.alertService.clearMessage(); }, 2000);          
+             setTimeout(() => { this.alertService.clearMessage(); }, 2000);          
             });
           }
 
@@ -100,7 +102,8 @@ export class UserPageComponent implements OnInit {
                 localStorage.removeItem('Authorization');
               },
               error => {
-                this.alertService.error(error);
+                this.alertService.error(error.errorStr);
+                setTimeout(() => { this.alertService.clearMessage(); }, 2000);
               });
             }
           }

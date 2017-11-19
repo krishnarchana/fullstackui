@@ -58,8 +58,8 @@ export class RegisterComponent implements OnInit {
           setTimeout(() => { this.loginComponent.alertService.success(this.successMsg); }, 1000);
         },
         error => {
-          this.alertService.error(error);
-
+          this.alertService.error(error.errorStr);
+          setTimeout(() => { this.alertService.clearMessage(); }, 2000);
         });
       }
     }

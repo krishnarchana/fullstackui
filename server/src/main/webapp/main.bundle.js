@@ -101,7 +101,7 @@ var AboutRoutingModule = (function () {
 /***/ "../../../../../src/app/about.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-inverse navbar-fixed-top\">\r\n\t<div class=\"container\">\r\n\t\t<h3 class=\"text-center\">Policy Management System</h3>\r\n\t</div>\r\n\t<hr>\r\n\t<div class=\"container\">\r\n\t\t<div id=\"navbar\">\r\n\t\t\t<ul class=\"nav navbar-nav nav-pills pull-right\">\r\n\t\t\t\t<li><a routerLink=\"/login\" routerLinkActive=\"active\">Home</a></li>\r\n\t\t\t</ul>\r\n\t\t</div>\r\n\t</div>\r\n</nav>\r\n\r\n<div id=\"loginContainer\" class=\"container\">\r\n\t<form class=\"form-signin form-horizontal\" role=\"form\">\r\n\t\t<h3>About Us</h3><br><br><br>\r\n\t\t<p><strong>Our&nbsp;Vision</strong></p>\r\n\t\t<div class=\"hr-thin style-line\" style=\"width: 12%;border-color: #f68428;\"></div>\r\n\t\t<p>We ensure the health and happiness of the people that we touch through our thoughtful, world-class solutions.</p>\r\n\t</form>\r\n</div>\r\n"
+module.exports = "<nav class=\"navbar navbar-inverse navbar-fixed-top\">\r\n\t<div class=\"container\">\r\n\t\t<h3 class=\"text-center\">Policy Management System</h3>\r\n\t</div>\r\n\t<hr>\r\n\t<div class=\"container\">\r\n\t\t<div id=\"navbar\">\r\n\t\t\t<ul class=\"nav navbar-nav nav-pills pull-right\">\r\n\t\t\t\t<li><a routerLink=\"/login\" routerLinkActive=\"active\">Home</a></li>\r\n\t\t\t</ul>\r\n\t\t</div>\r\n\t</div>\r\n</nav>\r\n\r\n<div id=\"loginContainer\" class=\"container\">\r\n\t<form class=\"form-signin form-horizontal\" role=\"form\">\r\n\t\t<h3>About Us</h3><br><br><br>\r\n\t\t<p><strong>Our&nbsp;Vision</strong></p>\r\n\t\t<div class=\"hr-thin style-line\" style=\"width: 16%;border-color: #f68428;\"></div>\r\n\t\t<p style=\"float: left;\">We ensure the health and happiness of the people that we touch through our thoughtful, world-class solutions.</p>\r\n\t</form>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -123,7 +123,8 @@ var AboutComponent = (function () {
     }
     AboutComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            template: __webpack_require__("../../../../../src/app/about.component.html")
+            template: __webpack_require__("../../../../../src/app/about.component.html"),
+            styles: [__webpack_require__("../../../../../src/assets/styles.css")]
         })
     ], AboutComponent);
     return AboutComponent;
@@ -784,7 +785,7 @@ var LoginComponent = (function () {
             _this.router.navigate(['/userPage'], navextras);
         }, function (error) {
             console.log("error ", error);
-            _this.alertService.error(error);
+            _this.alertService.error(error.errorStr);
         });
     };
     LoginComponent = __decorate([
@@ -812,8 +813,11 @@ var LoginComponent = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginAuthenticationService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/esm5/http.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/map.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__UserLogin__ = __webpack_require__("../../../../../src/app/UserLogin.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/catch.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_throw__ = __webpack_require__("../../../../rxjs/_esm5/add/observable/throw.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__UserLogin__ = __webpack_require__("../../../../../src/app/UserLogin.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -827,6 +831,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
+
 var LoginAuthenticationService = (function () {
     function LoginAuthenticationService(model, http) {
         this.model = model;
@@ -836,11 +843,13 @@ var LoginAuthenticationService = (function () {
         this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
         this.options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: this.headers });
         var body = JSON.stringify(model);
-        return this.http.post('/JerseyDemos/rest/auth/login', body, this.options).map(function (response) { return response.json(); });
+        return this.http.post('/JerseyDemos/rest/auth/login', body, this.options)
+            .map(function (response) { return response.json(); })
+            .catch(function (err) { return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["a" /* Observable */].throw(err.json()); });
     };
     LoginAuthenticationService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__UserLogin__["a" /* UserLogin */], __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__UserLogin__["a" /* UserLogin */], __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
     ], LoginAuthenticationService);
     return LoginAuthenticationService;
 }());
@@ -1263,6 +1272,24 @@ var UserPageComponent = (function () {
 }());
 
 
+
+/***/ }),
+
+/***/ "../../../../../src/assets/styles.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "body{\r\n\tpadding-top: 50px;\r\n\tbackground-color: #fff;\r\n}\r\n\r\n/*\r\nform css\r\n*/\r\n.labelMandatory:after{\r\n content:\"*\" ;\r\n color:red\r\n}\r\n*[role=\"form\"] {\r\n    max-width: 530px;\r\n    padding: 15px;\r\n    margin: 0 auto;\r\n    background-color: #fff;\r\n    border-radius: 0.3em;\r\n}\r\n*[role=\"form\"] h2 {\r\n    margin-left: 5em;\r\n    margin-bottom: 1em;\r\n}\r\n#loginContainer{\r\n\tpadding-top:120px;\r\n}\r\n.form-horizontal .control-label {\r\n\ttext-align:left;\r\n}\r\n.form-control {\r\n\twidth:75%;\r\n}\r\n.btn-block{\r\n\twidth:75%;\r\n}\r\n/*\r\nbootstrap css for header\r\n*/\r\n.navbar{\r\n\tmargin-bottom: 0px;\r\n}\r\n.navbar-brand {\r\n\tpadding-top:35px;\r\n\tpadding-bottom:0px;\r\n\theight:40px;\r\n}\r\n.navbar-inverse {\r\n\tbackground-color:#fff;\r\n\tborder-color:#fff;\r\n}\r\n.navbar-toggle {\r\n\tbackground-color:#000;\r\n}\r\n.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {\r\n\tborder-color:#fff;\r\n\theight:80px\r\n}\r\n#title{\r\n\tmargin-bottom:0px;\r\n}\r\n#navbar li a{\r\n\ttext-decoration:underline;\r\n\tcolor:#000;\r\n\tpadding-bottom:0px;\r\n}\r\nh3{\r\n\tpadding-top:30px;\r\n\tmargin-top:0px;\r\n\tmargin-bottom:0px;\r\n}\r\nh4{\r\n\tmargin-bottom:30px;\r\n}\r\nhr{\r\n\tmargin-top:10px;\r\n\tmargin-bottom:0px;\r\n\tcolor:#FFF;\r\n\twidth:100%;\r\n}\r\n.label{\r\n\tfont-size:70%;\r\n}\r\n.label-wrap {\r\n    position: absolute;\r\n\tright:10px;\r\n    height: 10px;\r\n}\r\n.jumbotron{\r\n\tbackground-color: #fff;\r\n\tpadding-top: 80px;\r\n}\r\n#reset, #register {\r\n    display: inline-block;\r\n    vertical-align: top;\r\n\t\twidth: 100%;\r\n}\r\n.btn-primary{\r\n\twidth:75%;\r\n}\r\n#contactBtn {\r\n\twidth: 75%;\r\n}\r\n\r\n.hr-thin {\r\n    float: left;\r\n    border-style: solid;\r\n    border-width: 1px;\r\n    border-color: rgba(68,68,68,0.15);\r\n    border-left: none;\r\n    border-right: none;\r\n    border-bottom: none;\r\n    height: 9px;\r\n    line-height: 9px;\r\n    margin: 0 auto;\r\n}\r\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
 
 /***/ }),
 

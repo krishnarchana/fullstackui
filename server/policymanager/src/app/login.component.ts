@@ -42,8 +42,9 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/userPage'], navextras);
         },
         error => {
-        console.log("error ", error);
-          this.alertService.error(error);
+          console.log("error ", error);
+          this.alertService.error(error.errorStr);
+          setTimeout(() => { this.alertService.clearMessage(); }, 2000); 
         });
       }
     }
