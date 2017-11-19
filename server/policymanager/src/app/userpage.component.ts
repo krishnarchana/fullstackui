@@ -86,7 +86,7 @@ export class UserPageComponent implements OnInit {
               setTimeout(() => { this.alertService.clearMessage(); }, 2000);
             },
             error => {
-             this.alertService.error("Edit unsuccessful!!")
+             this.alertService.error(error.errorStr)
              setTimeout(() => { this.alertService.clearMessage(); }, 2000);          
             });
           }

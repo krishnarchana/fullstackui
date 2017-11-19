@@ -19,8 +19,10 @@ export class LoginAuthenticationService {
     this.headers = new Headers({ 'Content-Type': 'application/json' });
     this.options = new RequestOptions({ headers: this.headers });
     let body = JSON.stringify(model);
+    
     return this.http.post('/JerseyDemos/rest/auth/login', body, this.options)
     .map((response: Response) => response.json())
-    .catch((err:any) => return Observable.throw(err.json()););
+    .catch((err:any) => { return Observable.throw(err.json())});
   }
-}
+
+ }

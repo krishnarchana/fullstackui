@@ -21,6 +21,6 @@ export class RegistrationService {
     let body = JSON.stringify(model);
     return this.http.post('/JerseyDemos/rest/user/add', body, this.options)
     .map((response: Response) => response.json())
-     .catch((err:any) => return Observable.throw(err.json()););
-  }
+     .catch((err:any) => { return Observable.throw(err.json()) });  
+   }
 }

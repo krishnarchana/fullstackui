@@ -22,7 +22,7 @@ export class UserpageService {
 
     return this.http.get('/JerseyDemos/rest/auth/logout',  this.options)
     .map((response: Response) => response.json())
-    .catch((err:any) => return Observable.throw(err.json()););
+    .catch((err:any) => { return Observable.throw(err.json())});
   }
 
   getPolicies():Observable<any>{
@@ -32,7 +32,7 @@ export class UserpageService {
 
     return this.http.get('/JerseyDemos/rest/policy/all', this.options)
     .map((response: Response) => response.json())
-    .catch((err:any) => return Observable.throw(err.json()););
+    .catch((err:any) => { return Observable.throw(err.json())});
   }
 
   getUserPolicies():Observable<any>{
@@ -42,7 +42,7 @@ export class UserpageService {
 
     return this.http.get('/JerseyDemos/rest/policy/query', this.options)
     .map((response: Response) => response.json())
-    .catch((err:any) => return Observable.throw(err.json()););
+    .catch((err:any) => { return Observable.throw(err.json())});
   }
 
   saveEditItem(model:Policy):Observable<any>{
@@ -52,6 +52,6 @@ export class UserpageService {
     let body = JSON.stringify(model);
     return this.http.post('/JerseyDemos/rest/policy/edit', body, this.options)
     .map((response: Response) => response.json())
-    .catch((err:any) => return Observable.throw(err.json()););
-  }
+    .catch((err:any) => {return Observable.throw(err.json())});
+   }
 }
