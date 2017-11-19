@@ -786,6 +786,7 @@ var LoginComponent = (function () {
         }, function (error) {
             console.log("error ", error);
             _this.alertService.error(error.errorStr);
+            setTimeout(function () { _this.alertService.clearMessage(); }, 2000);
         });
     };
     LoginComponent = __decorate([
@@ -968,7 +969,8 @@ var RegisterComponent = (function () {
             _this.router.navigate(['/login']);
             setTimeout(function () { _this.loginComponent.alertService.success(_this.successMsg); }, 1000);
         }, function (error) {
-            _this.alertService.error(error);
+            _this.alertService.error(error.errorStr);
+            setTimeout(function () { _this.alertService.clearMessage(); }, 2000);
         });
     };
     __decorate([
@@ -1002,8 +1004,11 @@ var RegisterComponent = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegistrationService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/esm5/http.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/map.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__User__ = __webpack_require__("../../../../../src/app/User.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/catch.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_throw__ = __webpack_require__("../../../../rxjs/_esm5/add/observable/throw.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__User__ = __webpack_require__("../../../../../src/app/User.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1017,6 +1022,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
+
 var RegistrationService = (function () {
     function RegistrationService(model, http) {
         this.model = model;
@@ -1026,11 +1034,13 @@ var RegistrationService = (function () {
         this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
         this.options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: this.headers });
         var body = JSON.stringify(model);
-        return this.http.post('/JerseyDemos/rest/user/add', body, this.options).map(function (response) { return response.json(); });
+        return this.http.post('/JerseyDemos/rest/user/add', body, this.options)
+            .map(function (response) { return response.json(); })
+            .catch(function (err) { return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["a" /* Observable */].throw(err.json()); });
     };
     RegistrationService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__User__["a" /* User */], __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__User__["a" /* User */], __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
     ], RegistrationService);
     return RegistrationService;
 }());
@@ -1097,8 +1107,11 @@ var UserPageRoutingModule = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserpageService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/esm5/http.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/map.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Policy__ = __webpack_require__("../../../../../src/app/Policy.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/catch.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_throw__ = __webpack_require__("../../../../rxjs/_esm5/add/observable/throw.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Policy__ = __webpack_require__("../../../../../src/app/Policy.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1112,6 +1125,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
+
 var UserpageService = (function () {
     function UserpageService(model, http) {
         this.model = model;
@@ -1121,30 +1137,38 @@ var UserpageService = (function () {
         this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
         this.headers.append('Authorization', 'Basic ' + localStorage.getItem('Authorization'));
         this.options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: this.headers });
-        return this.http.get('/JerseyDemos/rest/auth/logout', this.options).map(function (response) { return response.json(); });
+        return this.http.get('/JerseyDemos/rest/auth/logout', this.options)
+            .map(function (response) { return response.json(); })
+            .catch(function (err) { return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["a" /* Observable */].throw(err.json()); });
     };
     UserpageService.prototype.getPolicies = function () {
         this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
         this.headers.append('Authorization', 'Basic ' + localStorage.getItem('Authorization'));
         this.options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: this.headers });
-        return this.http.get('/JerseyDemos/rest/policy/all', this.options).map(function (response) { return response.json(); });
+        return this.http.get('/JerseyDemos/rest/policy/all', this.options)
+            .map(function (response) { return response.json(); })
+            .catch(function (err) { return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["a" /* Observable */].throw(err.json()); });
     };
     UserpageService.prototype.getUserPolicies = function () {
         this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
         this.headers.append('Authorization', 'Basic ' + localStorage.getItem('Authorization'));
         this.options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: this.headers });
-        return this.http.get('/JerseyDemos/rest/policy/query', this.options).map(function (response) { return response.json(); });
+        return this.http.get('/JerseyDemos/rest/policy/query', this.options)
+            .map(function (response) { return response.json(); })
+            .catch(function (err) { return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["a" /* Observable */].throw(err.json()); });
     };
     UserpageService.prototype.saveEditItem = function (model) {
         this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
         this.headers.append('Authorization', 'Basic ' + localStorage.getItem('Authorization'));
         this.options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: this.headers });
         var body = JSON.stringify(model);
-        return this.http.post('/JerseyDemos/rest/policy/edit', body, this.options).map(function (response) { return response.json(); });
+        return this.http.post('/JerseyDemos/rest/policy/edit', body, this.options)
+            .map(function (response) { return response.json(); })
+            .catch(function (err) { return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["a" /* Observable */].throw(err.json()); });
     };
     UserpageService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__Policy__["a" /* Policy */], __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__Policy__["a" /* Policy */], __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
     ], UserpageService);
     return UserpageService;
 }());
@@ -1205,7 +1229,8 @@ var UserPageComponent = (function () {
                 _this.message = _this.msg;
                 console.log("Admin policies", _this.message);
             }, function (error) {
-                _this.alertService.error(error);
+                _this.alertService.error(error.errorStr);
+                setTimeout(function () { _this.alertService.clearMessage(); }, 2000);
             });
         }
         else {
@@ -1216,7 +1241,8 @@ var UserPageComponent = (function () {
                 _this.message = _this.msg;
                 console.log("User policies", _this.message);
             }, function (error) {
-                _this.alertService.error(error);
+                _this.alertService.error(error.errorStr);
+                setTimeout(function () { _this.alertService.clearMessage(); }, 2000);
             });
         }
     }
@@ -1241,8 +1267,8 @@ var UserPageComponent = (function () {
             _this.alertService.success("Edit Success!!");
             setTimeout(function () { _this.alertService.clearMessage(); }, 2000);
         }, function (error) {
-            _this.alertService.error("Edit unsuccessful!!");
-            setTimeout(function () { ; _this.alertService.clearMessage(); }, 2000);
+            _this.alertService.error(error.errorStr);
+            setTimeout(function () { _this.alertService.clearMessage(); }, 2000);
         });
     };
     UserPageComponent.prototype.ngOnInit = function () { };
@@ -1254,7 +1280,8 @@ var UserPageComponent = (function () {
             _this.router.navigate(['/login']);
             localStorage.removeItem('Authorization');
         }, function (error) {
-            _this.alertService.error(error);
+            _this.alertService.error(error.errorStr);
+            setTimeout(function () { _this.alertService.clearMessage(); }, 2000);
         });
     };
     UserPageComponent = __decorate([

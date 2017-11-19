@@ -34,7 +34,7 @@ public class AuthService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response userLogin(UserLogin userLogin) {
-		ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_USER_ERROR, "Invalid username/password");
+		ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_USER_ERROR, "You are a not registered User. Register to login");
 		try {
 			// Authenticate the user using the credentials provided
 			UserToken userToken = authenticate(userLogin);
