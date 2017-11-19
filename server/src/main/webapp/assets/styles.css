@@ -100,3 +100,16 @@ hr{
 #contactBtn {
 	width: 75%;
 }
+
+.hr-thin {
+    float: left;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(68,68,68,0.15);
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    height: 9px;
+    line-height: 9px;
+    margin: 0 auto;
+}

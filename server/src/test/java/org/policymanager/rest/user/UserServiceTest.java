@@ -78,4 +78,9 @@ public class UserServiceTest extends JerseyTest {
 		// String response = target("/user/add/").request().get(String.class);
 		// Assert.assertTrue("orders summary".equals(response));
 	}
+	
+	@Test
+	public void checkLogoutTest() {
+		
+	}
 }

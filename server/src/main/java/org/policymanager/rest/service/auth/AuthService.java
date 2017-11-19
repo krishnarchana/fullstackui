@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
+import org.policymanager.rest.ErrorCode;
 import org.policymanager.rest.service.user.User;
 import org.policymanager.rest.service.user.UserLogin;
 import org.policymanager.rest.service.user.UserManager;
@@ -33,6 +34,7 @@ public class AuthService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response userLogin(UserLogin userLogin) {
+		ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_USER_ERROR, "Invalid username/password");
 		try {
 			// Authenticate the user using the credentials provided
 			UserToken userToken = authenticate(userLogin);
@@ -45,7 +47,7 @@ public class AuthService {
 			return Response.status(Response.Status.FORBIDDEN).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
 		}
 
-		return Response.status(Response.Status.UNAUTHORIZED).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity("Invalid username/password").build();
+		return Response.status(Response.Status.UNAUTHORIZED).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(error).build();
 	}
 
 	@PermitAll
@@ -53,6 +55,7 @@ public class AuthService {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response useLogout(@HeaderParam("authorization") String authString) {
+		ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_USER_ERROR, "User not found/authenticated.");
 		try {
 			// header value format will be "Basic encodedstring"
 			// for Basic authentication.
@@ -65,7 +68,8 @@ public class AuthService {
 			token = new String(decodedBytes, "UTF-8");
 
 			if (!isUserAuthenticated(token)) {
-				return Response.status(Response.Status.FORBIDDEN).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity("{\"error\":\"User not authenticated\"}")
+				error.setErrorStr("User is not authenticaed");
+				return Response.status(Response.Status.FORBIDDEN).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(error)
 						.build();
 			}
 
@@ -77,13 +81,14 @@ public class AuthService {
 				return Response.ok().entity("{\"success\":\"User logged out\"}").header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
 			} else {
 				logger.error("Failed to log out");
-				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\"error\":\"User logged failed.\"}").header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
+				error.setErrorStr("Logout failed.");
+				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(error).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
 			}
 		} catch (Exception e) {
 			logger.error("Failed to logout : " + e);
 		}
 
-		return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid username/password").build();
+		return Response.status(Response.Status.UNAUTHORIZED).entity(error).build();
 	}
 
 	/**

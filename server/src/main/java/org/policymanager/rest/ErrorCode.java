@@ -13,6 +13,7 @@ public class ErrorCode {
 	public static final int ERROR_CODE_READ_FAILED = -2;
 	public static final int ERROR_CODE_LOGIN_ALREADY_EXISTS = -3;
 	public static final int ERROR_CODE_USER_DOESNT_EXISTS = -4;
+	public static final int ERROR_CODE_USER_ERROR = -5;
 	public static final int ERROR_CODE_INVALID_USER_ID = -5;
 	public static final int ERROR_CODE_EXCEPTION = -100;
 	

@@ -783,6 +783,7 @@ var LoginComponent = (function () {
             form.reset();
             _this.router.navigate(['/userPage'], navextras);
         }, function (error) {
+            console.log("error ", error);
             _this.alertService.error(error);
         });
     };
