@@ -21,7 +21,9 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private model: UserLogin,
     private authenticationService: LoginAuthenticationService,
-    public alertService: AlertService) {}
+    public alertService: AlertService) {
+    	localStorage.removeItem('Authorization');
+    }
 
     ngOnInit() {}
 
@@ -34,13 +36,15 @@ export class LoginComponent implements OnInit {
           let user = data;
           if (user && user.token) {
             localStorage.setItem('Authorization', user.token);
-              form.reset();
           }
           navextras={queryParams:{"Authorization": user.name}};
+          form.reset();
           this.router.navigate(['/userPage'], navextras);
         },
         error => {
-          this.alertService.error(error);
+          console.log("error ", error);
+          this.alertService.error(error.errorStr);
+          setTimeout(() => { this.alertService.clearMessage(); }, 2000); 
         });
       }
     }

@@ -186,7 +186,7 @@ public class PolicyService {
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response editPolicy(Policy policy) {
-		logger.debug("Edit policy : " + policy);
+		logger.info("Edit policy : " + policy);
 
 		if (pManager.isValid()) {
 			try {

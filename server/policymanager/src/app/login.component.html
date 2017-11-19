@@ -17,7 +17,7 @@
       <div class="form-group">
         <label for="password" class="col-sm-3 control-label">Password</label>
         <div class="col-sm-9" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-          <input type="password" minlength="5" maxlength="20" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required />
+          <input type="password" minlength="4" maxlength="20" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required />
           <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
         </div>
       </div>
