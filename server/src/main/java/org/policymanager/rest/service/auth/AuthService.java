@@ -37,7 +37,7 @@ public class AuthService {
 		ErrorCode error = new ErrorCode(ErrorCode.ERROR_CODE_USER_ERROR, "You are a not registered User. Register to login");
 		try {
 			// Authenticate the user using the credentials provided
-			UserToken userToken = authenticate(userLogin);
+			UserToken userToken = authManager.authenticate(userLogin);
 			if (userToken != null) {
 				logger.info("Sending user token : " + userToken);
 				// Return the token on the response
@@ -71,7 +71,7 @@ public class AuthService {
 			byte[] decodedBytes = encodedUserPassword.getBytes();
 			token = new String(decodedBytes, "UTF-8");
 
-			if (!isUserAuthenticated(token)) {
+			if (!authManager.isUserAuthenticated(token)) {
 				error.setErrorStr("User is not authenticaed");
 				return Response.status(Response.Status.FORBIDDEN).header("Access-Control-Allow-Origin", "*")
 						.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(error)
@@ -100,106 +100,5 @@ public class AuthService {
 		return Response.status(Response.Status.UNAUTHORIZED).entity(error).build();
 	}
 
-	/**
-	 * Authenticate user, returns token
-	 * 
-	 * @param username
-	 * @param password
-	 * @return
-	 * @throws Exception
-	 */
-	private UserToken authenticate(UserLogin userLogin) throws Exception {
-		// logger.debug("Login : " + userLogin.getUsername() + ", password : " +
-		// userLogin.getPassword());
-
-		if ((userLogin.getUsername() == null || userLogin.getUsername().length() < 1)
-				|| (userLogin.getPassword() == null || userLogin.getPassword().length() < 4)) {
-			logger.warn("Invalid username/password");
-			return null;
-		}
-
-		try {
-
-			User user = userManager.getUserForLogin(userLogin.getUsername());
-			if (user != null) {
-
-				// Validate username and password
-				if (userLogin.getUsername().equals(user.getLogin())
-						&& user.getPassword().equals(userLogin.getPassword())) {
-
-					logger.debug("login : " + userLogin.getUsername() + ", validated");
-
-					// Check whether the user already authenticated
-					if (authManager.isUserAlreadyLoggedIn(user.getUser_id())) {
-
-						logger.debug("User : " + user.getLogin() + " already logged-in.");
-
-						UserToken userToken = authManager.getToken(user.getUser_id());
-						if (userToken != null) {
-							userToken.setName(user.getName_1());
-							userToken.setType(user.getType());
-						}
-
-						return userToken;
-					} else {
-						// Issue a token for the user
-						String token = issueToken();
-						logger.debug("Token generated for login :" + user.getLogin() + ", token : " + token);
-
-						UserToken userToken = new UserToken(user.getUser_id(), user.getName_1(), token);
-						if (!authManager.addLogin(userToken)) {
-							logger.error("Failed to add token to db");
-							return null;
-						}
-
-						userToken.setType(user.getType());
-						return userToken;
-					}
-				}
-			}
-
-		} catch (Exception e) {
-			logger.error("Error login : " + e);
-		}
-
-		return null;
-	}
-
-	private String issueToken() {
-		SecureRandom random = new SecureRandom();
-		byte bytes[] = new byte[20];
-		random.nextBytes(bytes);
-		String token = Base64.getEncoder().encodeToString(bytes);
-		return token;
-	}
-
-	private boolean isUserAuthenticated(String token) {
-		if (token == null)
-			return false;
-
-		try {
-
-			logger.debug("Token : " + token);
-			int user_id = authManager.getUserIdForToken(token);
-			if (user_id != -1) {
-				return true;
-			} else {
-				return false;
-			}
-		} catch (Exception e) {
-			logger.error("Error decoding : " + e);
-			return false;
-		}
-
-		// final StringTokenizer tokenizer = new
-		// StringTokenizer(usernameAndPassword, ":");
-		// final String username = tokenizer.nextToken();
-		// final String password = tokenizer.nextToken();
-		//
-		// // we have fixed the userid and password as admin
-		// // call some UserService/LDAP here
-		// boolean authenticationStatus = "admin".equals(username) &&
-		// "admin".equals(password);
-		// return authenticationStatus;
-	}
+	
 }
