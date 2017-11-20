@@ -29,7 +29,7 @@ public class UserService {
 	@GET
 	@Path("/get")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getUser(@QueryParam("user_id") int userId) throws InvalidRequestException {
+	public Response getUser(@QueryParam("user_id") int userId) throws Exception {
 
 		ErrorCode errorCode = null;
 		if (userId < 1) {
