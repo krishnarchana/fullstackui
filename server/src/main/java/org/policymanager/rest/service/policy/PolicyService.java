@@ -72,7 +72,7 @@ public class PolicyService {
 	@GET
 	@Path("/all")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getPolicyForUserId() {
+	public Response getAllPolicies() {
 
 		logger.debug("Getting all policies");
 

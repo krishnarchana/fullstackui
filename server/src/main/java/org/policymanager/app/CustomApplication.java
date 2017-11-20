@@ -7,7 +7,7 @@ import org.policymanager.provider.GsonMessageBodyHandler;
 
 public class CustomApplication extends ResourceConfig {
 	public CustomApplication() {
-		register(InvalidRequestExceptionMapper.class);
+		// register(InvalidRequestExceptionMapper.class);
 		packages("com.jersey.jaxb");
 		packages("com.fasterxml.jackson.jaxrs.json");
 		packages("org.policymanager");
